@@ -2,158 +2,1317 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>PEPMOSA Group Buy</title>
-.modal-content {
-  max-height: 90vh !important;
-  overflow-y: auto !important;
+
+<style>
+:root {
+  --pink: #ec4899;
+  --pink-light: #fce7f3;
+  --pink-soft: #fff5fa;
+  --purple: #a855f7;
+  --purple-light: #f3e8ff;
+  --black: #111014;
+  --dark: #1b171d;
+  --gray: #6b6470;
+  --white: #ffffff;
+  --border: #f3b6d3;
+}
+
+* {
   box-sizing: border-box;
 }
 
-@media (max-width: 600px) {
-  .modal-content {
-    max-height: 92vh !important;
-    overflow-y: auto !important;
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 5% 25%, #ffd6e8 0, #ffd6e800 18%),
+    radial-gradient(circle at 95% 75%, #e9d5ff 0, #e9d5ff00 20%),
+    #fffafd;
+  color: var(--black);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+/* ================= HEADER ================= */
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: 76px;
+  background: rgba(17,16,20,.97);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  border-bottom: 1px solid #332b35;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: auto;
+}
+
+.logo {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+}
+
+.brand {
+  line-height: .9;
+}
+
+.brand-main {
+  color: white;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  color: var(--pink);
+  font-size: 10px;
+  letter-spacing: 5px;
+  font-weight: 800;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+nav a:hover {
+  color: var(--pink);
+}
+
+.cart-button {
+  margin-left: 25px;
+  border: 1px solid var(--pink);
+  background: transparent;
+  color: white;
+  padding: 13px 20px;
+  border-radius: 22px;
+  font-weight: 800;
+}
+
+.cart-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pink);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  margin-left: 8px;
+}
+
+/* ================= HERO ================= */
+
+.hero {
+  min-height: 700px;
+  padding: 70px 8%;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image img {
+  width: min(100%, 560px);
+  max-height: 560px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 35px rgba(236,72,153,.18));
+}
+
+.eyebrow {
+  color: var(--pink);
+  letter-spacing: 5px;
+  font-size: 13px;
+  font-weight: 900;
+  margin-bottom: 15px;
+}
+
+.hero h1 {
+  font-family: Georgia, serif;
+  font-size: clamp(55px, 7vw, 90px);
+  line-height: .82;
+  margin: 0 0 25px;
+}
+
+.hero h1 span {
+  display: block;
+  color: var(--pink);
+}
+
+.hero-text {
+  color: var(--gray);
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* ================= ACCESS BOX ================= */
+
+.access-box {
+  margin-top: 30px;
+  background: rgba(255,255,255,.92);
+  border: 1px dashed var(--pink);
+  border-radius: 28px;
+  padding: 30px;
+  box-shadow: 0 20px 60px rgba(236,72,153,.12);
+}
+
+.access-box h2 {
+  margin: 0 0 10px;
+  font-size: 30px;
+}
+
+.price {
+  color: var(--pink);
+}
+
+.access-box p {
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.access-button {
+  width: 100%;
+  padding: 18px 22px;
+  border: 0;
+  border-radius: 40px;
+  background: linear-gradient(90deg, #111014, #241c27);
+  color: white;
+  font-size: 16px;
+  font-weight: 900;
+  box-shadow: 0 10px 25px rgba(17,16,20,.2);
+}
+
+.access-button:hover {
+  transform: translateY(-2px);
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.feature {
+  border: 1px solid #ead5f3;
+  background: white;
+  color: #654274;
+  padding: 9px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* ================= SECTION ================= */
+
+section {
+  padding: 80px 7%;
+}
+
+.section-title {
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 48px;
+  margin: 0 0 12px;
+}
+
+.section-subtitle {
+  text-align: center;
+  color: var(--gray);
+  margin: 0 auto 45px;
+  max-width: 650px;
+}
+
+/* ================= PRODUCTS ================= */
+
+.categories {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 35px;
+}
+
+.category {
+  border: 1px solid #e5c7e9;
+  background: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  font-weight: 800;
+}
+
+.category.active,
+.category:hover {
+  background: var(--pink);
+  color: white;
+  border-color: var(--pink);
+}
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.product {
+  background: white;
+  border: 1px solid #f1dce8;
+  border-radius: 22px;
+  padding: 22px;
+  box-shadow: 0 10px 30px rgba(40,20,40,.06);
+}
+
+.product h3 {
+  margin: 0 0 8px;
+  font-family: Georgia, serif;
+  font-size: 22px;
+}
+
+.product p {
+  color: var(--gray);
+  font-size: 14px;
+  min-height: 42px;
+}
+
+.product-price {
+  color: var(--pink);
+  font-size: 20px;
+  font-weight: 900;
+}
+
+.add-button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--black);
+  color: white;
+  font-weight: 800;
+}
+
+.add-button:hover {
+  background: var(--pink);
+}
+
+/* ================= HOW IT WORKS ================= */
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.step {
+  background: white;
+  border-radius: 25px;
+  padding: 30px;
+  border: 1px solid #efdce8;
+}
+
+.step-number {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pink);
+  color: white;
+  border-radius: 50%;
+  font-weight: 900;
+  margin-bottom: 18px;
+}
+
+.step h3 {
+  font-family: Georgia, serif;
+  font-size: 23px;
+}
+
+/* ================= FAQ ================= */
+
+.faq {
+  max-width: 800px;
+  margin: auto;
+}
+
+details {
+  background: white;
+  border: 1px solid #eedce8;
+  border-radius: 16px;
+  margin-bottom: 12px;
+  padding: 18px 20px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 800;
+}
+
+details p {
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+/* ================= FOOTER ================= */
+
+footer {
+  background: var(--black);
+  color: white;
+  padding: 50px 7%;
+  text-align: center;
+}
+
+footer .brand-main {
+  font-size: 30px;
+}
+
+footer p {
+  color: #aaa;
+}
+
+/* ================= MODAL ================= */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  background: rgba(17,16,20,.68);
+  backdrop-filter: blur(6px);
+}
+
+.modal.show {
+  display: flex;
+}
+
+.modal-box {
+  width: min(520px, 100%);
+  max-height: 92vh;
+  background: white;
+  border-radius: 28px;
+  border: 1px solid #f3c4dc;
+  box-shadow: 0 30px 90px rgba(0,0,0,.35);
+
+  /* THIS MAKES THE POPUP SCROLL */
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+
+.modal-header {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: white;
+  padding: 22px 25px;
+  border-bottom: 1px solid #f4e0ea;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: 28px;
+}
+
+.close {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f9e9f1;
+  font-size: 24px;
+}
+
+.modal-body {
+  padding: 25px;
+}
+
+.payment-intro {
+  text-align: center;
+  color: var(--gray);
+  line-height: 1.5;
+}
+
+.qr-wrapper {
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  border: 1px solid #f3c6dc;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.qr-wrapper img {
+  display: block;
+  width: min(100%, 360px);
+  margin: auto;
+  border-radius: 10px;
+}
+
+.payment-note {
+  color: #777;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.payment-step {
+  background: #fff4f9;
+  border-radius: 14px;
+  padding: 15px;
+  margin: 10px 0;
+  line-height: 1.4;
+}
+
+.payment-step strong {
+  color: var(--pink);
+}
+
+.form-label {
+  display: block;
+  margin: 20px 0 7px;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+input[type="text"],
+input[type="file"] {
+  width: 100%;
+  border: 1px solid #e8cad9;
+  border-radius: 13px;
+  padding: 14px;
+  background: white;
+}
+
+input[type="file"] {
+  padding: 11px;
+}
+
+.proof-preview {
+  display: none;
+  margin-top: 12px;
+  text-align: center;
+}
+
+.proof-preview img {
+  max-width: 100%;
+  max-height: 250px;
+  border-radius: 15px;
+  border: 1px solid #e9d1df;
+}
+
+.submit-access {
+  width: 100%;
+  margin-top: 22px;
+  border: 0;
+  border-radius: 30px;
+  padding: 17px;
+  background: linear-gradient(90deg, var(--pink), var(--purple));
+  color: white;
+  font-weight: 900;
+  font-size: 15px;
+}
+
+.small-note {
+  text-align: center;
+  color: #888;
+  font-size: 12px;
+  margin: 14px 0 0;
+}
+
+/* ================= CART ================= */
+
+.cart-panel {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 500;
+  width: min(390px, calc(100% - 40px));
+  background: white;
+  border: 1px solid #f1cbdc;
+  border-radius: 22px;
+  padding: 20px;
+  box-shadow: 0 20px 70px rgba(0,0,0,.25);
+  display: none;
+}
+
+.cart-panel.show {
+  display: block;
+}
+
+.cart-panel h3 {
+  margin-top: 0;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 10px 0;
+}
+
+.cart-total {
+  font-size: 20px;
+  font-weight: 900;
+  margin-top: 15px;
+}
+
+.cart-close {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: 0;
+  background: var(--black);
+  color: white;
+  border-radius: 12px;
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+
+  nav {
+    display: none;
   }
-}<style>
-:root{--pink:#f04b8b;--hot:#ff2f78;--lav:#a96cff;--lilac:#f1e6ff;--ink:#100d12;--muted:#706873;--line:#f2d9e5;--soft:#fff6fa}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff 0,#fff5fa 100%)}button,input,textarea{font:inherit}
-header{position:sticky;top:0;z-index:30;background:#09080b;color:#fff;border-bottom:1px solid #29252b}.nav{height:72px;max-width:1240px;margin:auto;padding:0 22px;display:flex;align-items:center;gap:28px}.nav img{height:52px;width:52px;object-fit:cover;border-radius:50%;border:2px solid var(--pink)}.brand{display:flex;align-items:center;gap:11px;margin-right:auto}.brand b{font-family:Georgia,serif;font-size:25px;letter-spacing:1px}.brand small{display:block;color:#ff8eb7;letter-spacing:3px;font-size:9px;font-weight:800}.links{display:flex;gap:28px}.links a{color:#fff;text-decoration:none;font-size:14px;font-weight:700}.links a:first-child{color:#ff77a6}.cart{border:1px solid #ff4e91;color:#fff;background:#130f14;border-radius:13px;padding:11px 17px;font-weight:800;cursor:pointer}.count{background:var(--pink);border-radius:50%;padding:3px 7px;margin-left:6px}
-.hero{position:relative;overflow:hidden;background:radial-gradient(circle at 20% 35%,#fff 0,#fff5fa 38%,#f8eaff 100%);border-bottom:1px solid var(--line)}.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;filter:blur(2px);opacity:.45}.hero:before{width:320px;height:320px;background:#ffb2cc;left:-100px;top:20px}.hero:after{width:300px;height:300px;background:#cda5ff;right:-80px;bottom:-100px}
-.hero-inner{position:relative;z-index:1;max-width:1240px;margin:auto;padding:48px 22px 36px;display:grid;grid-template-columns:1fr 1.15fr;gap:35px;align-items:center}.hero-logo{width:min(100%,500px);display:block;margin:auto}.hero-copy{text-align:left}.kicker{color:var(--pink);font-size:12px;font-weight:900;letter-spacing:3px}.hero h1{font-family:Georgia,serif;font-size:clamp(42px,5vw,68px);line-height:.95;margin:9px 0}.hero h1 span{color:var(--pink)}.hero p{color:var(--muted);line-height:1.65}.access{background:#fff;border:1px dashed var(--pink);border-radius:24px;padding:25px;box-shadow:0 18px 50px #d65b9218}.access h2{margin:0;font-size:28px}.access h2 span{color:var(--pink)}.access p{margin:8px 0}.pay{width:100%;border:0;background:#09080b;color:#fff;border-radius:999px;padding:15px 18px;font-weight:900;cursor:pointer;box-shadow:0 7px 25px #f04b8b35}.pay:hover{transform:translateY(-1px)}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.chip{background:#fff;border:1px solid #e6d4ee;border-radius:999px;padding:8px 12px;font-size:12px;font-weight:800;color:#5b3b76}
-.banner{background:#09080b;color:#fff;text-align:center;padding:11px;font-size:13px;font-weight:800}.banner b{color:#ff77a6}
-main{max-width:1240px;margin:auto;padding:25px 22px 70px}.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:18px;flex-wrap:wrap}.toolbar h2{font-family:Georgia,serif;margin-right:auto;font-size:32px}.tab{background:#fff;border:1px solid #e8cde0;border-radius:999px;padding:10px 16px;cursor:pointer;font-weight:800}.tab.active{background:linear-gradient(90deg,var(--pink),var(--lav));color:#fff;border-color:transparent}.layout{display:grid;grid-template-columns:1fr 355px;gap:20px}.products{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.card{background:#fff;border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 12px 30px #b95a8010}.photo{height:145px;background:linear-gradient(135deg,#ffe4ef,#f1e6ff);display:grid;place-items:center;font-size:55px}.body{padding:15px}.tag{display:inline-block;background:#f0e6ff;color:#7042a6;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:900}.card h3{margin:9px 0 4px;font-size:17px}.card small{color:var(--muted)}.price{font-size:21px;font-weight:900;color:var(--pink);margin:12px 0}.add{width:100%;border:1px solid #ff70a3;background:#fff;color:var(--pink);border-radius:10px;padding:10px;font-weight:900;cursor:pointer}.add:hover{background:#fff0f6}.locked .photo,.locked .body{filter:blur(5px)}.locked{position:relative}.locked:after{content:"🔒 PAY ₱180 TO UNLOCK";position:absolute;inset:0;display:grid;place-items:center;font-weight:900;color:#fff;background:#1610199c;text-align:center}
-.side{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;height:max-content;position:sticky;top:92px}.side h3{margin:0 0 14px}.empty{padding:35px 10px;text-align:center;color:var(--muted);background:var(--soft);border-radius:16px}.row{display:flex;justify-content:space-between;margin:10px 0}.total{border-top:1px solid var(--line);padding-top:13px;font-size:21px;font-weight:900}.access-note{background:var(--lilac);padding:13px;border-radius:14px;font-size:12px;line-height:1.5;margin:14px 0}.side .pay{margin-top:4px;background:linear-gradient(90deg,var(--pink),var(--hot))}.cart-item{display:flex;gap:9px;border-bottom:1px solid var(--line);padding:10px 0}.cart-item div:nth-child(2){flex:1}.remove{border:0;background:none;color:#c43b62;cursor:pointer}
-.info{margin-top:25px;background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;line-height:1.6;color:#514a50}.info b{color:var(--pink)}
-footer{background:#09080b;color:#fff;padding:28px;text-align:center}footer span{color:#ff7eaa}
-.modal{position:fixed;inset:0;background:#0d091080;z-index:100;display:none;align-items:center;justify-content:center;padding:20px}.modal.open{display:flex}.modal-card{width:min(480px,100%);background:#fff;border-radius:26px;padding:28px;box-shadow:0 25px 80px #0005}.modal-card h2{font-family:Georgia,serif;margin-top:0}.steps{display:grid;gap:10px;margin:16px 0}.step{padding:13px;background:var(--soft);border-radius:13px}.close{float:right;border:0;background:#f5eaf1;border-radius:50%;width:36px;height:36px;cursor:pointer}.confirm{width:100%;border:0;background:linear-gradient(90deg,var(--pink),var(--lav));color:#fff;border-radius:999px;padding:14px;font-weight:900;cursor:pointer}
-@media(max-width:950px){.hero-inner{grid-template-columns:1fr}.hero-logo{max-width:420px}.layout{grid-template-columns:1fr}.side{position:static}.products{grid-template-columns:repeat(2,1fr)}.links{display:none}}
-@media(max-width:560px){.products{grid-template-columns:1fr}.nav{height:64px}.brand b{font-size:20px}.hero-inner{padding-top:30px}.hero-copy{text-align:center}.access{margin-top:10px}}
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding: 45px 5%;
+  }
+
+  .hero-image {
+    order: 1;
+  }
+
+  .hero-content {
+    order: 2;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+
+  header {
+    padding: 0 15px;
+  }
+
+  .brand-main {
+    font-size: 20px;
+  }
+
+  .brand-sub {
+    font-size: 8px;
+  }
+
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .cart-button {
+    margin-left: 10px;
+    padding: 10px 13px;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: 35px 18px 60px;
+  }
+
+  .hero h1 {
+    font-size: 55px;
+  }
+
+  .hero-text {
+    font-size: 16px;
+  }
+
+  .access-box {
+    padding: 22px;
+  }
+
+  section {
+    padding: 55px 18px;
+  }
+
+  .section-title {
+    font-size: 38px;
+  }
+
+  .products {
+    grid-template-columns: 1fr;
+  }
+
+  .modal {
+    padding: 8px;
+    align-items: center;
+  }
+
+  .modal-box {
+    max-height: 94vh;
+    border-radius: 22px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .qr-wrapper img {
+    width: min(100%, 310px);
+  }
+}
 </style>
 </head>
-<body>
-<header><div class="nav">
-  <div class="brand"><img src="pepmosa-mark.png" alt="PEPMOSA"><div><b>PEPMOSA</b><small>GROUP BUY</small></div></div>
-  <div class="links"><a href="#">Home</a><a href="#products">Products</a><a href="#how">How It Works</a><a href="#faq">FAQs</a><a href="#contact">Contact</a></div>
-  <button class="cart" onclick="openCart()">🛒 My Cart <span class="count" id="count">0</span></button>
-</div></header>
 
-<section class="hero"><div class="hero-inner">
-  <img class="hero-logo" src="pepmosa-mark.png" alt="PEPMOSA logo">
-  <div class="hero-copy">
-    <div class="kicker">PEPMOSA • GROUP BUY</div>
-    <h1>PEPMOSA<br><span>GROUP BUY</span> 🎀</h1>
-    <p>Welcome to the PEPMOSA Group Buy. Pay the one-time access fee to unlock the catalog and start placing orders.</p>
-    <div class="access">
-      <h2>PAY <span>₱180</span> TO GET ACCESS</h2>
-      <p>A one-time <b>₱180 access fee</b> is required before you can start ordering and join the group buy.</p>
-      <p><b>Pay once • Order anytime</b></p>
-      <button class="pay" onclick="openAccess()">🔒 PAY ₱180 TO START ORDERING ♥</button>
-      <div class="chips"><span class="chip">♡ Secure & Trusted</span><span class="chip">✦ Best Group Prices</span><span class="chip">⚡ Fast Updates</span><span class="chip">♡ Easy Ordering</span></div>
+<body>
+
+<header>
+
+  <div class="logo-area">
+    <img src="pepmosa-mark.png" class="logo" alt="PEPMOSA">
+    <div class="brand">
+      <div class="brand-main">PEPMOSA</div>
+      <div class="brand-sub">GROUP BUY</div>
     </div>
   </div>
-</div></section>
 
-<div class="banner">📣 <b>PAY ₱180 ONE-TIME ACCESS FEE</b> TO UNLOCK ALL PRODUCTS AND START ORDERING! ♥</div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#how">How It Works</a>
+    <a href="#faq">FAQs</a>
+    <a href="#contact">Contact</a>
+  </nav>
 
-<main id="products">
-  <div class="toolbar"><h2>Our Products ♥</h2><button class="tab active" data-cat="All">All</button><button class="tab" data-cat="Peptides">Peptides</button><button class="tab" data-cat="Syringes">Syringes</button><button class="tab" data-cat="Beauty">Beauty</button><button class="tab" data-cat="Other">Others</button></div>
-  <div class="layout"><div class="products" id="productsGrid"></div>
-    <aside class="side">
-      <h3>🛒 Your Cart</h3><div id="cartBox"><div class="empty">🔒<br><b>Access required</b><br>Pay ₱180 to start ordering.</div></div>
-      <div class="access-note">♡ <b>One-time payment only</b><br>Full access to the group-buy catalog and future ordering.</div>
-      <div class="row"><span>Subtotal</span><b id="subtotal">₱0.00</b></div>
-      <div class="row"><span>Admin / Access Fee</span><b>₱180.00</b></div>
-      <div class="row total"><span>TOTAL</span><b id="total">₱180.00</b></div>
-      <button class="pay" onclick="openAccess()">🔒 Pay ₱180 to Get Access</button>
-    </aside>
+  <button class="cart-button" onclick="toggleCart()">
+    🛒 My Cart
+    <span class="cart-count" id="cartCount">0</span>
+  </button>
+
+</header>
+
+
+<!-- HERO -->
+
+<main id="home">
+
+<section class="hero">
+
+  <div class="hero-image">
+    <img src="pepmosa-mark.png" alt="PEPMOSA Logo">
   </div>
-  <div class="info" id="how"><b>HOW IT WORKS</b><br>1. Pay the one-time ₱180 access fee. &nbsp; 2. Your access is confirmed. &nbsp; 3. Browse the available group buys. &nbsp; 4. Add your items and submit your order. <br><br><b>IMPORTANT:</b> The ₱180 fee is separate from product pricing and is non-refundable after confirmation. This front-end demo does not process real payments yet.</div>
+
+  <div class="hero-content">
+
+    <div class="eyebrow">
+      PEPMOSA • GROUP BUY
+    </div>
+
+    <h1>
+      PEPMOSA
+      <span>GROUP BUY 🎀</span>
+    </h1>
+
+    <p class="hero-text">
+      Welcome to the PEPMOSA Group Buy.
+      Pay the one-time access fee to unlock ordering
+      and access the group-buy catalog.
+    </p>
+
+    <div class="access-box">
+
+      <h2>
+        PAY <span class="price">₱180</span> TO GET ACCESS
+      </h2>
+
+      <p>
+        A one-time <strong>₱180 access fee</strong> is required
+        before you can start ordering and joining the group buy.
+      </p>
+
+      <p>
+        <strong>Pay once • Order anytime</strong>
+      </p>
+
+      <button class="access-button" onclick="openAccess()">
+        🔒 PAY ₱180 TO START ORDERING ♥
+      </button>
+
+      <div class="features">
+        <span class="feature">♡ Secure & Trusted</span>
+        <span class="feature">✦ Group Prices</span>
+        <span class="feature">⚡ Fast Updates</span>
+        <span class="feature">♡ Easy Ordering</span>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+
+<section id="products">
+
+  <h2 class="section-title">
+    Our Products ♥
+  </h2>
+
+  <p class="section-subtitle">
+    Browse the current PEPMOSA Group Buy catalog.
+    Access is required before ordering.
+  </p>
+
+  <div class="categories">
+
+    <button class="category active">
+      All
+    </button>
+
+    <button class="category">
+      Peptides
+    </button>
+
+    <button class="category">
+      Syringes
+    </button>
+
+    <button class="category">
+      Beauty
+    </button>
+
+    <button class="category">
+      Others
+    </button>
+
+  </div>
+
+  <div class="products">
+
+    <div class="product">
+      <h3>Product 01</h3>
+      <p>Group-buy product listing.</p>
+      <div class="product-price">₱0.00</div>
+      <button class="add-button" onclick="addToCart('Product 01',0)">
+        Add to Cart
+      </button>
+    </div>
+
+    <div class="product">
+      <h3>Product 02</h3>
+      <p>Group-buy product listing.</p>
+      <div class="product-price">₱0.00</div>
+      <button class="add-button" onclick="addToCart('Product 02',0)">
+        Add to Cart
+      </button>
+    </div>
+
+    <div class="product">
+      <h3>Product 03</h3>
+      <p>Group-buy product listing.</p>
+      <div class="product-price">₱0.00</div>
+      <button class="add-button" onclick="addToCart('Product 03',0)">
+        Add to Cart
+      </button>
+    </div>
+
+    <div class="product">
+      <h3>Product 04</h3>
+      <p>Group-buy product listing.</p>
+      <div class="product-price">₱0.00</div>
+      <button class="add-button" onclick="addToCart('Product 04',0)">
+        Add to Cart
+      </button>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+
+<section id="how">
+
+  <h2 class="section-title">
+    How It Works
+  </h2>
+
+  <p class="section-subtitle">
+    Simple steps to join the PEPMOSA Group Buy.
+  </p>
+
+  <div class="steps">
+
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Pay ₱180</h3>
+      <p>
+        Scan the PEPMOSA payment QR code and pay the
+        one-time ₱180 access fee.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Submit Proof</h3>
+      <p>
+        Enter your name or Telegram username and upload
+        your payment proof.
+      </p>
+    </div>
+
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Get Access</h3>
+      <p>
+        Your payment can be reviewed by the admin before
+        ordering access is granted.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- FAQ -->
+
+<section id="faq">
+
+  <h2 class="section-title">
+    FAQs
+  </h2>
+
+  <div class="faq">
+
+    <details>
+      <summary>Is the ₱180 payment recurring?</summary>
+      <p>
+        No. The ₱180 is a one-time access fee.
+      </p>
+    </details>
+
+    <details>
+      <summary>Do I need to pay ₱180 every order?</summary>
+      <p>
+        No. The access fee is paid once.
+      </p>
+    </details>
+
+    <details>
+      <summary>Where do I pay?</summary>
+      <p>
+        Use the PEPMOSA QR code shown in the access window.
+      </p>
+    </details>
+
+    <details>
+      <summary>Do I need a payment reference number?</summary>
+      <p>
+        No. PEPMOSA does not require you to enter a payment
+        reference number on this form.
+      </p>
+    </details>
+
+  </div>
+
+</section>
+
+
+<!-- CONTACT -->
+
+<section id="contact">
+
+  <h2 class="section-title">
+    PEPMOSA ♥
+  </h2>
+
+  <p class="section-subtitle">
+    For access, order, and group-buy concerns,
+    contact the PEPMOSA admin.
+  </p>
+
+</section>
+
 </main>
 
-<footer id="contact">♥ Thank you for supporting <span>PEPMOSA</span> 🎀 &nbsp; • &nbsp; Trusted • Organized • Loved</footer>
+
+<footer>
+  <div class="brand-main">PEPMOSA</div>
+  <div class="brand-sub">GROUP BUY</div>
+  <p>© 2026 PEPMOSA. All rights reserved.</p>
+</footer>
+
+
+<!-- ================= ACCESS MODAL ================= -->
 
 <div class="modal" id="accessModal">
-  <div class="modal-card">
-    <button class="close" onclick="closeAccess()">✕</button>
-    <div class="kicker">PEPMOSA ACCESS</div>
-    <h2>Pay ₱180 & Get Access 🎀</h2>
-    <p>There is <b>no payment to Vercel</b>. The ₱180 is PEPMOSA's one-time access fee.</p>
 
-    <div class="step" style="border:1px solid #efd7e3;background:#fff8fc;text-align:center">
-      <b>PAY ₱180 TO GET ACCESS</b><br>
-      <span style="color:#777">Scan the QR code below to pay the one-time access fee.</span>
-      <div style="margin:16px auto 6px;max-width:330px;padding:10px;background:#fff;border-radius:18px;border:1px solid #f1d7e6">
-        <img src="pepmosa-payment-qr.jpg" alt="PEPMOSA payment QR code" style="display:block;width:100%;height:auto;border-radius:12px">
+  <div class="modal-box">
+
+    <div class="modal-header">
+
+      <h2>
+        Get PEPMOSA Access 🎀
+      </h2>
+
+      <button class="close" onclick="closeAccess()">
+        ×
+      </button>
+
+    </div>
+
+
+    <div class="modal-body">
+
+      <p class="payment-intro">
+        Scan the QR code below to pay the
+        <strong>one-time ₱180 access fee.</strong>
+      </p>
+
+
+      <div class="qr-wrapper">
+
+        <img
+          src="pepmosa-payment-qr.jpg"
+          alt="PEPMOSA Payment QR Code"
+        >
+
+        <div class="payment-note">
+          Transfer fees may apply.
+        </div>
+
       </div>
-      <small style="color:#777">Transfer fees may apply.</small>
+
+
+      <div class="payment-step">
+        <strong>1.</strong>
+        Send exactly <strong>₱180</strong>
+        using the payment QR code above.
+      </div>
+
+
+      <div class="payment-step">
+        <strong>2.</strong>
+        Enter your Name / Telegram Username below.
+      </div>
+
+
+      <div class="payment-step">
+        <strong>3.</strong>
+        Upload your payment proof for admin review.
+      </div>
+
+
+      <label class="form-label">
+        NAME / TELEGRAM USERNAME
+      </label>
+
+      <input
+        type="text"
+        id="telegramName"
+        placeholder="@username or full name"
+      >
+
+
+      <label class="form-label">
+        PAYMENT PROOF
+      </label>
+
+      <input
+        type="file"
+        id="paymentProof"
+        accept="image/*"
+        onchange="previewProof(event)"
+      >
+
+
+      <div class="proof-preview" id="proofPreview">
+
+        <p>
+          <strong>Payment proof selected:</strong>
+        </p>
+
+        <img id="proofImage" alt="Payment proof preview">
+
+      </div>
+
+
+      <button
+        class="submit-access"
+        onclick="submitAccess()"
+      >
+        I'VE PAID ₱180 — REQUEST ACCESS
+      </button>
+
+
+      <p class="small-note">
+        Your submission can be reviewed by the PEPMOSA admin.
+      </p>
+
     </div>
 
-    <div class="steps">
-      <div class="step"><b>1.</b> Send exactly <b>₱180</b> using the payment details above.</div>
-      <div class="step"><b>2.</b> Keep your receipt/reference number.</div>
-      <div class="step"><b>3.</b> Submit the details below. Your access can be reviewed by the admin.</div>
-    </div>
-
-    <label style="display:block;font-size:12px;font-weight:800;margin-bottom:6px">NAME / TELEGRAM USERNAME</label>
-    <input id="payer" placeholder="@username or full name" style="width:100%;padding:12px;border:1px solid #efd7e3;border-radius:12px">
-
-    <label style="display:block;font-size:12px;font-weight:800;margin:12px 0 6px">PAYMENT PROOF</label>
-    <input id="proof" type="file" accept="image/*" style="width:100%;padding:10px;border:1px dashed #efd7e3;border-radius:12px;background:#fff8fc">
-
-    <button class="confirm" onclick="confirmAccess()">I'VE PAID ₱180 — REQUEST ACCESS</button>
-
-    <div id="pendingBox" style="display:none;margin-top:12px;padding:13px;border-radius:14px;background:#f1e6ff;color:#5b3b76;font-size:12px">
-      💜 <b>Request submitted.</b><br>
-      Your payment can now be reviewed by the PEPMOSA admin. This free version stores the request on this browser only.
-    </div>
-
-    <p style="font-size:11px;color:#777">FREE VERSION: no payment gateway or paid Vercel service is connected yet. We can connect a real database and admin approval system later.</p>
   </div>
+
 </div>
 
+
+<!-- ================= CART ================= -->
+
+<div class="cart-panel" id="cartPanel">
+
+  <h3>
+    Your Cart 🛒
+  </h3>
+
+  <div id="cartItems">
+    Your cart is empty.
+  </div>
+
+  <div class="cart-total" id="cartTotal">
+    Total: ₱0
+  </div>
+
+  <button class="cart-close" onclick="toggleCart()">
+    Close Cart
+  </button>
+
+</div>
+
+
 <script>
-const fee=180;let unlocked=false,cart={};let cat="All";
-const items=[
- {id:1,n:"Group Buy Product 01",c:"Peptides",p:849,i:"🧪"},
- {id:2,n:"Group Buy Product 02",c:"Peptides",p:949,i:"🧪"},
- {id:3,n:"Gluta / Beauty 01",c:"Beauty",p:699,i:"✨"},
- {id:4,n:"Skin / Beauty 02",c:"Beauty",p:1200,i:"🌸"},
- {id:5,n:"Syringe / Supply 01",c:"Syringes",p:450,i:"💉"},
- {id:6,n:"Syringe / Supply 02",c:"Syringes",p:350,i:"💉"},
- {id:7,n:"Add-on Product 01",c:"Other",p:50,i:"🎀"},
- {id:8,n:"Group Buy Product 03",c:"Peptides",p:860,i:"🧪"}
-];
-const money=n=>"₱"+n.toLocaleString("en-PH",{minimumFractionDigits:2});
-function render(){
- const list=cat==="All"?items:items.filter(x=>x.c===cat);
- document.getElementById("productsGrid").innerHTML=list.map(x=>`<article class="card ${unlocked?'':'locked'}"><div class="photo">${x.i}</div><div class="body"><span class="tag">${x.c.toUpperCase()}</span><h3>${x.n}</h3><small>Group Buy</small><div class="price">${money(x.p)}</div><button class="add" onclick="${unlocked?`add(${x.id})`:`openAccess()`}">${unlocked?'🛒 Add to Cart':'🔒 Pay ₱180 to Unlock'}</button></div></article>`).join("");
- renderCart();
+
+let cart = [];
+
+
+/* ================= ACCESS MODAL ================= */
+
+function openAccess() {
+  document.getElementById("accessModal").classList.add("show");
+  document.body.style.overflow = "hidden";
 }
-function add(id){cart[id]=(cart[id]||0)+1;renderCart()}
-function remove(id){delete cart[id];renderCart()}
-function renderCart(){
- const ids=Object.keys(cart);let sub=ids.reduce((s,id)=>s+items.find(x=>x.id==id).p*cart[id],0);
- document.getElementById("count").textContent=ids.reduce((s,id)=>s+cart[id],0);
- document.getElementById("subtotal").textContent=money(sub);
- document.getElementById("total").textContent=money(sub+fee);
- document.getElementById("cartBox").innerHTML=unlocked?(ids.length?ids.map(id=>{let x=items.find(y=>y.id==id);return `<div class="cart-item"><div>${x.i}</div><div><b>${x.n}</b><br><small>${money(x.p)} × ${cart[id]}</small></div><button class="remove" onclick="remove(${id})">✕</button></div>`}).join(""):'<div class="empty">Your cart is empty.<br>Add products to get started.</div>'):'<div class="empty">🔒<br><b>Access required</b><br>Pay ₱180 to start ordering.</div>';
+
+function closeAccess() {
+  document.getElementById("accessModal").classList.remove("show");
+  document.body.style.overflow = "";
 }
-function openAccess(){document.getElementById("accessModal").classList.add("open")}
-function closeAccess(){document.getElementById("accessModal").classList.remove("open")}
-function confirmAccess(){
- const payer=document.getElementById("payer").value.trim();
- const proof=document.getElementById("proof").files[0];
- if(!payer){alert("Please enter your name/Telegram.");return}
- if(!proof){alert("Please upload your payment screenshot.");return}
- const request={payer,proofName:proof.name,createdAt:new Date().toISOString(),status:"pending"};
- localStorage.setItem("pepmosaAccessRequest",JSON.stringify(request));
- document.getElementById("pendingBox").style.display="block";
- alert("Your ₱180 access request has been saved on this browser. Admin approval/database will be connected in the next step.");
+
+
+/* Close when clicking outside */
+
+document.getElementById("accessModal").addEventListener("click", function(e) {
+
+  if (e.target === this) {
+    closeAccess();
+  }
+
+});
+
+
+/* ================= PAYMENT PROOF ================= */
+
+function previewProof(event) {
+
+  const file = event.target.files[0];
+
+  if (!file) return;
+
+  const preview = document.getElementById("proofPreview");
+  const image = document.getElementById("proofImage");
+
+  const reader = new FileReader();
+
+  reader.onload = function(e) {
+
+    image.src = e.target.result;
+    preview.style.display = "block";
+
+  };
+
+  reader.readAsDataURL(file);
 }
-document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");cat=b.dataset.cat;render()});
-function openCart(){document.getElementById("products").scrollIntoView({behavior:"smooth"})}
-render();
+
+
+function submitAccess() {
+
+  const name =
+    document.getElementById("telegramName").value.trim();
+
+  const proof =
+    document.getElementById("paymentProof").files[0];
+
+
+  if (!name) {
+
+    alert(
+      "Please enter your Name / Telegram Username."
+    );
+
+    return;
+
+  }
+
+
+  if (!proof) {
+
+    alert(
+      "Please upload your payment proof."
+    );
+
+    return;
+
+  }
+
+
+  alert(
+    "Thank you! Your ₱180 access request has been prepared for admin review."
+  );
+
+}
+
+
+/* ================= CART ================= */
+
+function addToCart(name, price) {
+
+  cart.push({
+    name: name,
+    price: price
+  });
+
+  updateCart();
+
+  alert(
+    name + " was added to your cart."
+  );
+
+}
+
+
+function updateCart() {
+
+  const count =
+    document.getElementById("cartCount");
+
+  const items =
+    document.getElementById("cartItems");
+
+  const total =
+    document.getElementById("cartTotal");
+
+
+  count.textContent = cart.length;
+
+
+  if (cart.length === 0) {
+
+    items.innerHTML =
+      "Your cart is empty.";
+
+    total.textContent =
+      "Total: ₱0";
+
+    return;
+
+  }
+
+
+  items.innerHTML = "";
+
+
+  let sum = 0;
+
+
+  cart.forEach((item, index) => {
+
+    sum += item.price;
+
+    const row =
+      document.createElement("div");
+
+    row.className = "cart-item";
+
+    row.innerHTML = `
+      <span>${item.name}</span>
+      <strong>₱${item.price.toLocaleString()}</strong>
+    `;
+
+    items.appendChild(row);
+
+  });
+
+
+  total.textContent =
+    "Total: ₱" + sum.toLocaleString();
+
+}
+
+
+function toggleCart() {
+
+  document
+    .getElementById("cartPanel")
+    .classList.toggle("show");
+
+}
+
+
 </script>
+
 </body>
 </html>
