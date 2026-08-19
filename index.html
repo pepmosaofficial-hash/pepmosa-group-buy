@@ -1,1152 +1,436 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PEPMOSA Group Buy</title>
-
-<style>
-:root{
-  --pink:#ed4b91;
-  --pink-light:#fff1f7;
-  --pink-soft:#fce0ed;
-  --purple:#9b5de5;
-  --purple-light:#f2e7ff;
-  --black:#17141a;
-  --text:#28232b;
-  --white:#ffffff;
-}
-
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
-html{
-  scroll-behavior:smooth;
-}
-
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 5% 25%, rgba(255,190,218,.55) 0, rgba(255,190,218,0) 22%),
-    radial-gradient(circle at 95% 75%, rgba(202,166,255,.45) 0, rgba(202,166,255,0) 25%),
-    linear-gradient(135deg,#fff8fc,#ffffff 55%,#f9efff);
-  min-height:100vh;
-}
-
-button,
-input{
-  font-family:inherit;
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header{
-  height:76px;
-  background:#17141a;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 6%;
-  position:sticky;
-  top:0;
-  z-index:1000;
-  box-shadow:0 5px 25px rgba(0,0,0,.18);
-}
-
-.logo{
-  height:62px;
-  width:auto;
-  object-fit:contain;
-  display:block;
-}
-
-nav{
-  display:flex;
-  align-items:center;
-  gap:34px;
-}
-
-nav a{
-  color:white;
-  text-decoration:none;
-  font-weight:700;
-  font-size:15px;
-  transition:.2s;
-}
-
-nav a:hover{
-  color:var(--pink);
-}
-
-.cart{
-  border:1px solid var(--pink);
-  border-radius:25px;
-  padding:11px 18px;
-  color:white;
-  background:transparent;
-  font-weight:800;
-  cursor:pointer;
-}
-
-.cart span{
-  background:var(--pink);
-  border-radius:50%;
-  padding:5px 9px;
-  margin-left:7px;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero{
-  min-height:calc(100vh - 76px);
-  padding:50px 7%;
-  display:grid;
-  grid-template-columns:minmax(380px,.9fr) minmax(500px,1.1fr);
-  gap:55px;
-  align-items:center;
-  overflow:hidden;
-}
-
-.hero-image{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  width:100%;
-  min-width:0;
-}
-
-.hero-image-frame{
-  width:min(100%,540px);
-  aspect-ratio:1 / 1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-  border-radius:30px;
-  background:rgba(255,255,255,.6);
-}
-
-.hero-image img{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  object-position:center;
-  display:block;
-  filter:drop-shadow(0 20px 35px rgba(236,72,153,.18));
-}
-
-.hero-content{
-  min-width:0;
-  padding:15px 0;
-}
-
-.eyebrow{
-  color:var(--pink);
-  letter-spacing:5px;
-  font-size:14px;
-  font-weight:900;
-  margin-bottom:14px;
-}
-
-.hero h1{
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:clamp(55px,6vw,88px);
-  line-height:.88;
-  color:#151217;
-  margin-bottom:22px;
-}
-
-.hero h1 .pink{
-  color:var(--pink);
-}
-
-.hero-description{
-  font-size:18px;
-  line-height:1.65;
-  color:#6d6570;
-  max-width:720px;
-  margin-bottom:28px;
-}
-
-/* =========================
-   ACCESS CARD
-========================= */
-
-.access-card{
-  background:rgba(255,255,255,.92);
-  border:1.5px dashed var(--pink);
-  border-radius:28px;
-  padding:32px;
-  box-shadow:0 18px 45px rgba(190,75,145,.12);
-}
-
-.access-card h2{
-  font-size:32px;
-  margin-bottom:13px;
-  color:#17141a;
-}
-
-.access-card h2 span{
-  color:var(--pink);
-}
-
-.access-card p{
-  color:#716873;
-  line-height:1.6;
-  font-size:16px;
-}
-
-.pay-once{
-  margin-top:15px;
-  font-weight:800;
-  color:#625667 !important;
-}
-
-.access-button{
-  width:100%;
-  border:none;
-  border-radius:35px;
-  background:linear-gradient(90deg,#17141a,#201a22);
-  color:white;
-  padding:20px;
-  font-size:17px;
-  font-weight:900;
-  cursor:pointer;
-  margin-top:20px;
-  box-shadow:0 13px 25px rgba(0,0,0,.17);
-  transition:.2s;
-}
-
-.access-button:hover{
-  transform:translateY(-2px);
-  box-shadow:0 17px 30px rgba(0,0,0,.22);
-}
-
-.badges{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:17px;
-}
-
-.badge{
-  border:1px solid #ead4ef;
-  background:#fff;
-  color:#674875;
-  padding:9px 15px;
-  border-radius:25px;
-  font-size:13px;
-  font-weight:800;
-}
-
-/* =========================
-   SECTIONS
-========================= */
-
-section{
-  padding:80px 7%;
-}
-
-.section-title{
-  text-align:center;
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:45px;
-  color:#18141a;
-  margin-bottom:12px;
-}
-
-.section-title span{
-  color:var(--pink);
-}
-
-.section-subtitle{
-  text-align:center;
-  color:#766d77;
-  max-width:650px;
-  margin:0 auto 40px;
-  line-height:1.6;
-}
-
-/* =========================
-   HOW IT WORKS
-========================= */
-
-.steps{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:25px;
-  max-width:1050px;
-  margin:auto;
-}
-
-.step{
-  background:white;
-  border-radius:25px;
-  padding:30px;
-  text-align:center;
-  box-shadow:0 12px 35px rgba(120,70,100,.09);
-  border:1px solid #f2dceb;
-}
-
-.step-number{
-  width:55px;
-  height:55px;
-  margin:0 auto 18px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius:50%;
-  background:linear-gradient(135deg,var(--pink),var(--purple));
-  color:white;
-  font-weight:900;
-  font-size:20px;
-}
-
-.step h3{
-  margin-bottom:10px;
-}
-
-.step p{
-  color:#746b74;
-  line-height:1.55;
-}
-
-/* =========================
-   FAQ
-========================= */
-
-.faq{
-  max-width:850px;
-  margin:auto;
-}
-
-details{
-  background:white;
-  border:1px solid #f0dce9;
-  border-radius:17px;
-  padding:20px 23px;
-  margin-bottom:12px;
-}
-
-summary{
-  cursor:pointer;
-  font-weight:800;
-}
-
-details p{
-  color:#716873;
-  line-height:1.6;
-  padding-top:15px;
-}
-
-/* =========================
-   CONTACT
-========================= */
-
-.contact-box{
-  max-width:850px;
-  margin:auto;
-  background:linear-gradient(135deg,#fff,#fff3fa);
-  border:1px solid #f2d5e6;
-  border-radius:28px;
-  padding:40px;
-  text-align:center;
-}
-
-.contact-box p{
-  color:#716873;
-  line-height:1.6;
-  margin-top:12px;
-}
-
-/* =========================
-   MODAL
-========================= */
-
-.modal-overlay{
-  position:fixed;
-  inset:0;
-  background:rgba(18,14,20,.68);
-  backdrop-filter:blur(5px);
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:3000;
-}
-
-.modal-overlay.show{
-  display:flex;
-}
-
-.modal{
-  width:min(600px,100%);
-  max-height:92vh;
-  overflow-y:auto;
-  background:white;
-  border-radius:28px;
-  position:relative;
-  padding:30px;
-  box-shadow:0 30px 80px rgba(0,0,0,.35);
-}
-
-.close{
-  position:absolute;
-  right:18px;
-  top:18px;
-  width:40px;
-  height:40px;
-  border:none;
-  border-radius:50%;
-  background:#f8eaf2;
-  font-size:23px;
-  cursor:pointer;
-}
-
-.modal h2{
-  font-family:Georgia,"Times New Roman",serif;
-  font-size:32px;
-  margin-bottom:8px;
-}
-
-.modal-intro{
-  color:#6f6670;
-  margin-bottom:22px;
-  line-height:1.5;
-}
-
-.qr-box{
-  background:#fff7fb;
-  border:1px solid #f0d4e3;
-  border-radius:22px;
-  padding:20px;
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.qr-box img{
-  display:block;
-  width:min(100%,360px);
-  height:auto;
-  margin:0 auto 12px;
-  border-radius:10px;
-}
-
-.qr-label{
-  font-weight:900;
-  color:#1267c9;
-  font-size:20px;
-}
-
-.instruction{
-  background:#fff4f8;
-  border-radius:15px;
-  padding:14px 17px;
-  margin-bottom:10px;
-  line-height:1.45;
-}
-
-.instruction strong{
-  color:#17141a;
-}
-
-.form-group{
-  margin-top:18px;
-}
-
-.form-group label{
-  display:block;
-  font-size:13px;
-  font-weight:900;
-  margin-bottom:7px;
-}
-
-.form-group input[type="text"]{
-  width:100%;
-  border:1px solid #e9cfe0;
-  border-radius:13px;
-  padding:15px;
-  font-size:16px;
-  outline:none;
-}
-
-.form-group input[type="text"]:focus{
-  border-color:var(--pink);
-  box-shadow:0 0 0 3px rgba(237,75,145,.1);
-}
-
-.file-upload{
-  border:2px dashed #dfb8d2;
-  border-radius:16px;
-  padding:20px;
-  text-align:center;
-  background:#fffafd;
-  cursor:pointer;
-}
-
-.file-upload:hover{
-  border-color:var(--pink);
-  background:#fff4f9;
-}
-
-.file-upload input{
-  display:none;
-}
-
-.file-text{
-  font-weight:800;
-  color:#72556e;
-}
-
-.file-name{
-  display:block;
-  margin-top:8px;
-  font-size:13px;
-  color:var(--pink);
-  word-break:break-word;
-}
-
-.submit-button{
-  width:100%;
-  border:none;
-  border-radius:30px;
-  padding:17px;
-  margin-top:22px;
-  background:linear-gradient(90deg,var(--pink),var(--purple));
-  color:white;
-  font-weight:900;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.success{
-  display:none;
-  background:#eefbf3;
-  color:#24733d;
-  padding:15px;
-  border-radius:14px;
-  margin-top:15px;
-  text-align:center;
-  font-weight:700;
-}
-
-.success.show{
-  display:block;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer{
-  background:#17141a;
-  color:white;
-  text-align:center;
-  padding:35px 20px;
-}
-
-footer strong{
-  color:var(--pink);
-}
-
-footer p{
-  color:#aaa;
-  margin-top:8px;
-  font-size:13px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:950px){
-
-  header{
-    padding:0 4%;
-  }
-
-  nav{
-    display:none;
-  }
-
-  .hero{
-    min-height:auto;
-    grid-template-columns:1fr;
-    padding:35px 5% 60px;
-    gap:30px;
-  }
-
-  .hero-image{
-    order:1;
-  }
-
-  .hero-image-frame{
-    width:min(100%,500px);
-  }
-
-  .hero-content{
-    order:2;
-    padding:0;
-  }
-
-  .hero h1{
-    font-size:58px;
-  }
-
-  .steps{
-    grid-template-columns:1fr;
-  }
-
-  section{
-    padding:60px 5%;
-  }
-}
-
-@media(max-width:550px){
-
-  header{
-    height:65px;
-  }
-
-  .logo{
-    height:52px;
-    max-width:180px;
-  }
-
-  .cart{
-    padding:9px 12px;
-    font-size:12px;
-  }
-
-  .hero{
-    padding:25px 18px 50px;
-  }
-
-  .hero-image-frame{
-    border-radius:20px;
-  }
-
-  .hero h1{
-    font-size:48px;
-  }
-
-  .hero-description{
-    font-size:16px;
-  }
-
-  .access-card{
-    padding:22px;
-    border-radius:22px;
-  }
-
-  .access-card h2{
-    font-size:26px;
-  }
-
-  .section-title{
-    font-size:36px;
-  }
-
-  .modal{
-    padding:22px;
-    border-radius:22px;
-  }
-
-  .modal h2{
-    font-size:27px;
-  }
-
-  .qr-box{
-    padding:12px;
-  }
-}
-</style>
-</head>
-
-<body>
-
-<header>
-  <a href="#home">
-    <img class="logo" src="pepmosa-mark.png" alt="PEPMOSA Group Buy">
-  </a>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
-    <a href="#how">How It Works</a>
-    <a href="#faq">FAQs</a>
-    <a href="#contact">Contact</a>
-    <button class="cart" onclick="openAccess()">
-      🛒 My Cart <span>0</span>
-    </button>
-  </nav>
-</header>
-
-
-<!-- =========================
-     HOME
-========================= -->
-
-<main id="home">
-
-<section class="hero">
-
-  <div class="hero-image">
-    <div class="hero-image-frame">
-      <img
-        src="pepmosa-mark.png"
-        alt="PEPMOSA"
-      >
-    </div>
-  </div>
-
-  <div class="hero-content">
-
-    <div class="eyebrow">
-      PEPMOSA • GROUP BUY
-    </div>
-
-    <h1>
-      PEPMOSA<br>
-      <span class="pink">GROUP BUY</span> 🎀
-    </h1>
-
-    <p class="hero-description">
-      Welcome to the PEPMOSA Group Buy.
-      Pay the one-time access fee to unlock ordering
-      and access the group-buy catalog.
-    </p>
-
-    <div class="access-card">
-
-      <h2>
-        PAY <span>₱180</span> TO GET ACCESS
-      </h2>
-
-      <p>
-        A one-time <strong>₱180 access fee</strong> is required
-        before you can start ordering and joining the group buy.
-      </p>
-
-      <p class="pay-once">
-        Pay once • Order anytime
-      </p>
-
-      <button class="access-button" onclick="openAccess()">
-        🔒 PAY ₱180 TO START ORDERING ♥
-      </button>
-
-      <div class="badges">
-        <div class="badge">♡ Secure & Trusted</div>
-        <div class="badge">✦ Group Prices</div>
-        <div class="badge">⚡ Fast Updates</div>
-        <div class="badge">♡ Easy Ordering</div>
-      </div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     PRODUCTS
-========================= -->
-
-<section id="products">
-
-  <h2 class="section-title">
-    Our <span>Products</span> ♥
-  </h2>
-
-  <p class="section-subtitle">
-    Access to the group-buy catalog is available after
-    completing the one-time ₱180 access fee.
-  </p>
-
-  <div class="steps">
-
-    <div class="step">
-      <div class="step-number">♡</div>
-      <h3>Group Buy Pricing</h3>
-      <p>
-        Enjoy group-buy pricing and special offers
-        available to members.
-      </p>
-    </div>
-
-    <div class="step">
-      <div class="step-number">✦</div>
-      <h3>Updated Catalog</h3>
-      <p>
-        Product availability and updates can be
-        added to the catalog as orders open.
-      </p>
-    </div>
-
-    <div class="step">
-      <div class="step-number">⚡</div>
-      <h3>Easy Ordering</h3>
-      <p>
-        Once access is approved, you can proceed
-        with ordering through the group-buy system.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     HOW IT WORKS
-========================= -->
-
-<section id="how">
-
-  <h2 class="section-title">
-    How It <span>Works</span>
-  </h2>
-
-  <p class="section-subtitle">
-    Three simple steps to get started.
-  </p>
-
-  <div class="steps">
-
-    <div class="step">
-      <div class="step-number">1</div>
-      <h3>Pay ₱180</h3>
-      <p>
-        Scan the PEPMOSA payment QR code and
-        send exactly ₱180 for your one-time access.
-      </p>
-    </div>
-
-    <div class="step">
-      <div class="step-number">2</div>
-      <h3>Submit Proof</h3>
-      <p>
-        Enter your name or Telegram username and
-        upload your payment screenshot.
-      </p>
-    </div>
-
-    <div class="step">
-      <div class="step-number">3</div>
-      <h3>Get Access</h3>
-      <p>
-        Your payment can be reviewed by the admin.
-        Once approved, you can start ordering.
-      </p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     FAQ
-========================= -->
-
-<section id="faq">
-
-  <h2 class="section-title">
-    Frequently Asked <span>Questions</span>
-  </h2>
-
-  <div class="faq">
-
-    <details>
-      <summary>Is the ₱180 fee a one-time payment?</summary>
-      <p>
-        Yes. The ₱180 is a one-time access fee.
-      </p>
-    </details>
-
-    <details>
-      <summary>Do I need to pay ₱180 every time I order?</summary>
-      <p>
-        No. The access fee is paid once.
-      </p>
-    </details>
-
-    <details>
-      <summary>How do I request access?</summary>
-      <p>
-        Click the “PAY ₱180 TO START ORDERING” button,
-        scan the QR code, then submit your name/Telegram
-        username and payment proof.
-      </p>
-    </details>
-
-    <details>
-      <summary>Do I need a payment reference number?</summary>
-      <p>
-        No payment reference number is required on this form.
-        Simply upload your payment proof.
-      </p>
-    </details>
-
-  </div>
-
-</section>
-
-
-<!-- =========================
-     CONTACT
-========================= -->
-
-<section id="contact">
-
-  <div class="contact-box">
-
-    <h2 class="section-title">
-      Need <span>Help?</span>
-    </h2>
-
-    <p>
-      If you have questions about access, payment,
-      products, or ordering, please contact the PEPMOSA admin.
-    </p>
-
-  </div>
-
-</section>
-
-</main>
-
-
-<footer>
-  <strong>PEPMOSA GROUP BUY</strong>
-  <p>Pay once • Order anytime</p>
-</footer>
-
-
-<!-- =========================
-     PAYMENT MODAL
-========================= -->
-
-<div class="modal-overlay" id="accessModal">
-
-  <div class="modal">
-
-    <button class="close" onclick="closeAccess()">×</button>
-
-    <h2>Get PEPMOSA Access 🎀</h2>
-
-    <p class="modal-intro">
-      Pay the <strong>₱180 one-time access fee</strong>
-      to unlock ordering.
-    </p>
-
-
-    <!-- QR CODE -->
-
-    <div class="qr-box">
-
-      <p style="margin-bottom:12px;font-weight:800;">
-        Scan the QR code below to pay the one-time access fee.
-      </p>
-
-      <img
-        src="pepmosa-payment-qr.jpg"
-        alt="PEPMOSA Payment QR Code"
-      >
-
-      <div class="qr-label">
-        PEPMOSA
-      </div>
-
-      <p style="font-size:12px;margin-top:7px;color:#888;">
-        Transfer fees may apply.
-      </p>
-
-    </div>
-
-
-    <!-- INSTRUCTIONS -->
-
-    <div class="instruction">
-      <strong>1.</strong>
-      Send exactly <strong>₱180</strong> using the payment
-      details shown above.
-    </div>
-
-    <div class="instruction">
-      <strong>2.</strong>
-      Take a screenshot of your successful payment.
-    </div>
-
-    <div class="instruction">
-      <strong>3.</strong>
-      Submit your name/Telegram username and payment proof
-      below for admin review.
-    </div>
-
-
-    <!-- NAME -->
-
-    <div class="form-group">
-
-      <label>
-        NAME / TELEGRAM USERNAME
-      </label>
-
-      <input
-        type="text"
-        id="username"
-        placeholder="@username or full name"
-      >
-
-    </div>
-
-
-    <!-- PAYMENT PROOF -->
-
-    <div class="form-group">
-
-      <label>
-        PAYMENT PROOF
-      </label>
-
-      <label class="file-upload">
-
-        <input
-          type="file"
-          id="paymentProof"
-          accept="image/*"
-          onchange="showFileName()"
-        >
-
-        <span class="file-text">
-          📎 CLICK HERE TO UPLOAD PAYMENT SCREENSHOT
-        </span>
-
-        <span
-          class="file-name"
-          id="fileName"
-        ></span>
-
-      </label>
-
-    </div>
-
-
-    <button
-      class="submit-button"
-      onclick="submitAccess()"
-    >
-      ♥ SUBMIT ACCESS REQUEST
-    </button>
-
- <div class="success" id="successMessage" style="display:none;">
-</div>
-  
-
-  </div>
-
-</div>
-
-
 <script>
 
-/* =========================
-   OPEN / CLOSE MODAL
-========================= */
+/* ================================
+   OPEN / CLOSE ACCESS MODAL
+================================ */
 
 function openAccess(){
-  document.getElementById("accessModal").classList.add("show");
-  document.body.style.overflow="hidden";
+    const modal = document.getElementById("accessModal");
+
+    if(modal){
+        modal.classList.add("show");
+        document.body.style.overflow = "hidden";
+    }
 }
 
 function closeAccess(){
-  document.getElementById("accessModal").classList.remove("show");
-  document.body.style.overflow="";
+    const modal = document.getElementById("accessModal");
+
+    if(modal){
+        modal.classList.remove("show");
+    }
+
+    document.body.style.overflow = "";
 }
 
 
-/* CLOSE WHEN CLICKING OUTSIDE */
+/* ================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+================================ */
 
-document.getElementById("accessModal").addEventListener("click",function(e){
+const accessModal = document.getElementById("accessModal");
 
-  if(e.target === this){
-    closeAccess();
-  }
+if(accessModal){
 
-});
+    accessModal.addEventListener("click", function(e){
 
+        if(e.target === accessModal){
+            closeAccess();
+        }
 
-/* ESCAPE KEY */
-
-document.addEventListener("keydown",function(e){
-
-  if(e.key === "Escape"){
-    closeAccess();
-  }
-
-});
-
-
-/* =========================
-   FILE NAME
-========================= */
-
-function showFileName(){
-
-  const input=document.getElementById("paymentProof");
-  const fileName=document.getElementById("fileName");
-
-  if(input.files.length > 0){
-    fileName.textContent="✓ "+input.files[0].name;
-  }else{
-    fileName.textContent="";
-  }
+    });
 
 }
 
 
-/* =========================
-   SUBMIT
-========================= */
+/* ================================
+   APPROVAL POPUP
+================================ */
+
+function showApprovalPopup(){
+
+    /* Remove old popup if one exists */
+    const oldPopup = document.getElementById("approvalPopup");
+
+    if(oldPopup){
+        oldPopup.remove();
+    }
+
+
+    /* Create popup */
+    const popup = document.createElement("div");
+
+    popup.id = "approvalPopup";
+
+    popup.innerHTML = `
+        <div class="approval-overlay">
+
+            <div class="approval-box">
+
+                <button
+                    class="approval-close"
+                    onclick="closeApprovalPopup()"
+                    type="button">
+                    ×
+                </button>
+
+                <div class="approval-icon">
+                    ✓
+                </div>
+
+                <h2>REQUEST SUBMITTED</h2>
+
+                <p>
+                    Your access request has been received.
+                </p>
+
+                <p class="approval-main">
+                    Please wait for admin approval.
+                </p>
+
+                <div class="approval-status">
+                    ⏳ WAITING FOR ADMIN APPROVAL
+                </div>
+
+                <button
+                    class="approval-ok"
+                    onclick="closeApprovalPopup()"
+                    type="button">
+                    OK
+                </button>
+
+            </div>
+
+        </div>
+    `;
+
+    document.body.appendChild(popup);
+
+    document.body.style.overflow = "hidden";
+}
+
+
+/* ================================
+   CLOSE APPROVAL POPUP
+================================ */
+
+function closeApprovalPopup(){
+
+    const popup = document.getElementById("approvalPopup");
+
+    if(popup){
+        popup.remove();
+    }
+
+    document.body.style.overflow = "";
+}
+
+
+/* ================================
+   SUBMIT ACCESS REQUEST
+================================ */
 
 function submitAccess(){
 
-  const username=document.getElementById("username").value.trim();
-  const proof=document.getElementById("paymentProof").files[0];
-  const success=document.getElementById("successMessage");
+    const usernameElement =
+        document.getElementById("username");
 
-  if(!username){
-    alert("Please enter your name or Telegram username.");
-    return;
-  }
+    const proofElement =
+        document.getElementById("paymentProof");
 
-  if(!proof){
-    alert("Please upload your payment screenshot.");
-    return;
-  }
 
-  // Close the access/payment modal
-document.getElementById("accessModal").classList.remove("show");
+    const username =
+        usernameElement
+        ? usernameElement.value.trim()
+        : "";
 
-// Show approval message
-setTimeout(() => {
-    alert("💗 REQUEST RECEIVED!\n\nYour payment proof has been submitted successfully.\n\nPlease wait for admin approval.");
-}, 300);
+    const proof =
+        proofElement && proofElement.files
+        ? proofElement.files[0]
+        : null;
+
+
+    /* Check username */
+
+    if(!username){
+
+        alert(
+            "Please enter your name or Telegram username."
+        );
+
+        return;
+    }
+
+
+    /* Check payment proof */
+
+    if(!proof){
+
+        alert(
+            "Please upload your payment screenshot."
+        );
+
+        return;
+    }
+
+
+    /*
+       ================================
+       REQUEST IS VALID
+       ================================
+    */
+
+
+    /* Close the access form first */
+
+    closeAccess();
+
+
+    /*
+       Small delay so the modal closes
+       before the approval popup appears.
+    */
+
+    setTimeout(function(){
+
+        showApprovalPopup();
+
+    }, 250);
+
+
+    /*
+       Keep the user in WAITING status.
+       Do NOT automatically give access.
+    */
+
+    console.log(
+        "Access request submitted for:",
+        username
+    );
 
 }
 
-</script>
 
-</body>
-</html>
+/* ================================
+   APPROVAL POPUP STYLES
+================================ */
+
+const approvalStyles = document.createElement("style");
+
+approvalStyles.innerHTML = `
+
+#approvalPopup{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+}
+
+.approval-overlay{
+    position:absolute;
+    inset:0;
+
+    background:rgba(0,0,0,0.65);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:20px;
+
+    backdrop-filter:blur(5px);
+}
+
+.approval-box{
+
+    position:relative;
+
+    width:100%;
+    max-width:460px;
+
+    background:#ffffff;
+
+    border-radius:24px;
+
+    padding:40px 30px 30px;
+
+    text-align:center;
+
+    box-shadow:
+        0 25px 80px rgba(0,0,0,0.35);
+
+    animation:
+        approvalPopupIn
+        .25s ease-out;
+}
+
+.approval-close{
+
+    position:absolute;
+
+    top:12px;
+    right:16px;
+
+    width:36px;
+    height:36px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#f4f4f4;
+
+    color:#222;
+
+    font-size:25px;
+
+    cursor:pointer;
+
+    line-height:36px;
+}
+
+.approval-close:hover{
+    background:#eeeeee;
+}
+
+.approval-icon{
+
+    width:75px;
+    height:75px;
+
+    margin:0 auto 20px;
+
+    border-radius:50%;
+
+    background:linear-gradient(
+        135deg,
+        #ed4b91,
+        #9b5de5
+    );
+
+    color:white;
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.approval-box h2{
+
+    margin:0 0 15px;
+
+    font-size:26px;
+
+    font-weight:800;
+
+    color:#17141a;
+}
+
+.approval-box p{
+
+    margin:8px 0;
+
+    color:#666;
+
+    font-size:16px;
+
+    line-height:1.5;
+}
+
+.approval-main{
+
+    color:#ed4b91 !important;
+
+    font-weight:800;
+
+    font-size:18px !important;
+
+}
+
+.approval-status{
+
+    margin:25px 0;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    background:#fff1f7;
+
+    color:#9b5de5;
+
+    font-size:14px;
+
+    font-weight:800;
+
+    letter-spacing:.3px;
+}
+
+.approval-ok{
+
+    width:100%;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:30px;
+
+    background:linear-gradient(
+        90deg,
+        #ed4b91,
+        #9b5de5
+    );
+
+    color:white;
+
+    font-size:16px;
+
+    font-weight:800;
+
+    cursor:pointer;
+}
+
+.approval-ok:hover{
+
+    opacity:.9;
+
+}
+
+@keyframes approvalPopupIn{
+
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+`;
+
+document.head.appendChild(approvalStyles);
+
+
+/* ================================
+   ESC KEY CLOSES POPUP
+================================ */
+
+document.addEventListener("keydown", function(e){
+
+    if(e.key === "Escape"){
+
+        closeApprovalPopup();
+
+    }
+
+});
+
+</script>
