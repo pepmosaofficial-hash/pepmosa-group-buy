@@ -1054,8 +1054,9 @@ footer p{
       class="success"
       id="successMessage"
     >
-      ✓ Request received! Please wait for admin confirmation.
-    </div>
+      <div class="success" id="successMessage" style="display:none;">
+</div>
+  
 
   </div>
 
@@ -1139,7 +1140,13 @@ function submitAccess(){
     return;
   }
 
-  success.classList.add("show");
+  // Close the access/payment modal
+document.getElementById("accessModal").classList.remove("show");
+
+// Show approval message
+setTimeout(() => {
+    alert("💗 REQUEST RECEIVED!\n\nYour payment proof has been submitted successfully.\n\nPlease wait for admin approval.");
+}, 300);
 
 }
 
