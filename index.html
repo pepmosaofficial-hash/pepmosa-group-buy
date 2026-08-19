@@ -4,7 +4,18 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PEPMOSA Group Buy</title>
-<style>
+.modal-content {
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 600px) {
+  .modal-content {
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+  }
+}<style>
 :root{--pink:#f04b8b;--hot:#ff2f78;--lav:#a96cff;--lilac:#f1e6ff;--ink:#100d12;--muted:#706873;--line:#f2d9e5;--soft:#fff6fa}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,Arial,sans-serif;color:var(--ink);background:linear-gradient(180deg,#fff 0,#fff5fa 100%)}button,input,textarea{font:inherit}
 header{position:sticky;top:0;z-index:30;background:#09080b;color:#fff;border-bottom:1px solid #29252b}.nav{height:72px;max-width:1240px;margin:auto;padding:0 22px;display:flex;align-items:center;gap:28px}.nav img{height:52px;width:52px;object-fit:cover;border-radius:50%;border:2px solid var(--pink)}.brand{display:flex;align-items:center;gap:11px;margin-right:auto}.brand b{font-family:Georgia,serif;font-size:25px;letter-spacing:1px}.brand small{display:block;color:#ff8eb7;letter-spacing:3px;font-size:9px;font-weight:800}.links{display:flex;gap:28px}.links a{color:#fff;text-decoration:none;font-size:14px;font-weight:700}.links a:first-child{color:#ff77a6}.cart{border:1px solid #ff4e91;color:#fff;background:#130f14;border-radius:13px;padding:11px 17px;font-weight:800;cursor:pointer}.count{background:var(--pink);border-radius:50%;padding:3px 7px;margin-left:6px}
