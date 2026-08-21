@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPMOSA Admin</title>
+<style>
+:root{--pink:#d92f86;--purple:#a63fd1;--ink:#281d2d;--muted:#766a78;--bg:#faf7f9;--green:#147a45;--red:#b42318}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--ink)}
+header{background:#fff;border-bottom:1px solid #eadfe7;padding:18px 28px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-weight:900;letter-spacing:2px;font-size:22px}
+.badge{font-size:12px;color:#777}
+main{max-width:1150px;margin:35px auto;padding:0 18px}
+.card{background:#fff;border:1px solid #eadfe7;border-radius:20px;box-shadow:0 10px 35px rgba(50,20,50,.07);padding:28px}
+h1{margin:0 0 8px;font-size:30px}
+h2{margin:0 0 18px}
+.muted{color:var(--muted)}
+.login{max-width:480px;margin:80px auto}
+label{display:block;font-weight:700;font-size:13px;margin:14px 0 7px}
+input,select{width:100%;padding:13px 14px;border:1px solid #ddd1db;border-radius:12px;font-size:15px;outline:none}
+input:focus,select:focus{border-color:var(--pink)}
+button{border:0;border-radius:12px;padding:12px 17px;font-weight:800;cursor:pointer}
+.primary{background:linear-gradient(90deg,var(--pink),var(--purple));color:#fff}
+.secondary{background:#fff;border:1px solid #d8cbd5;color:var(--ink)}
+.danger{background:#fff0ef;color:var(--red);border:1px solid #f3c2bd}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap}
+.toolbar .left{display:flex;gap:10px;align-items:center}
+.toolbar select{width:auto;min-width:160px}
+#message{margin:15px 0;padding:12px 15px;border-radius:12px;display:none}
+.ok{background:#eef9f2;color:var(--green)}
+.err{background:#fff0ef;color:var(--red)}
+table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:1px solid #eadfe7;border-radius:15px}
+th,td{text-align:left;padding:13px 12px;border-bottom:1px solid #eee5eb;vertical-align:top;font-size:13px}
+th{background:#faf3f7;font-size:12px;text-transform:uppercase;letter-spacing:.5px}
+tr:last-child td{border-bottom:0}
+.status{display:inline-block;padding:6px 9px;border-radius:99px;font-size:11px;font-weight:900}
+.pending{background:#fff5dc;color:#8a5b00}
+.approved{background:#e9f8ef;color:var(--green)}
+.rejected{background:#fff0ef;color:var(--red)}
+.proof{display:inline-block;margin-top:7px;color:#b52270;font-weight:700;text-decoration:none}
+.actions{display:flex;gap:7px;flex-wrap:wrap}
+.small{font-size:12px;color:#777}
+.empty{text-align:center;padding:45px;color:#777}
+.hidden{display:none}
+@media(max-width:800px){table{display:block;overflow-x:auto;white-space:nowrap}.card{padding:18px}header{padding:15px 18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">PEPMOSA <span style="font-weight:400">ADMIN</span></div>
+  <div class="badge">Private payment dashboard</div>
+</header>
+
+<main>
+  <section id="loginCard" class="card login">
+    <h1>Admin Login</h1>
+    <p class="muted">Sign in to review PEPMOSA admin-fee payments.</p>
+    <label for="password">ADMIN PASSWORD</label>
+    <input id="password" type="password" placeholder="Enter admin password" autocomplete="current-password">
+    <button id="loginBtn" class="primary" style="width:100%;margin-top:16px">LOGIN</button>
+    <div id="loginMsg"></div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <div class="toolbar">
+      <div>
+        <h1>Payment Review</h1>
+        <div class="muted">Approve verified ₱180 admin-fee payments and send access codes.</div>
+      </div>
+      <div class="left">
+        <select id="statusFilter">
+          <option value="PENDING">PENDING</option>
+          <option value="APPROVED">APPROVED</option>
+          <option value="REJECTED">REJECTED</option>
+        </select>
+        <button id="refreshBtn" class="secondary">↻ Refresh</button>
+        <button id="logoutBtn" class="secondary">Logout</button>
+      </div>
+    </div>
+
+    <div id="message"></div>
+
+    <div class="card" style="padding:0;overflow:hidden">
+      <table>
+        <thead>
+          <tr>
+            <th>Reference</th>
+            <th>Customer</th>
+            <th>Contact</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Proof</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<script>
+const API="https://script.google.com/macros/s/AKfycby4PdrwgbGqYj-xtCrBYxLuK5i06-bVg3u_r9YNtt2Zjii9G20RbiFe_82FDpaIKtNR/exec";
+let adminPassword="";
+
+const $=id=>document.getElementById(id);
+function show(el,text,type="ok"){
+  el.textContent=text; el.className=type; el.style.display="block";
+}
+function esc(v){
+  return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+async function login(){
+  const p=$("password").value.trim();
+  if(!p){show($("loginMsg"),"Enter the admin password.","err");return}
+  $("loginBtn").disabled=true;
+  try{
+    const r=await fetch(API,{method:"POST",body:JSON.stringify({action:"adminLogin",password:p})});
+    const d=await r.json();
+    if(!d.success) throw new Error(d.message||"Login failed.");
+    adminPassword=p;
+    $("loginCard").classList.add("hidden");
+    $("dashboard").classList.remove("hidden");
+    loadPayments();
+  }catch(e){show($("loginMsg"),e.message,"err")}
+  finally{$("loginBtn").disabled=false}
+}
+
+async function loadPayments(){
+  const status=$("statusFilter").value;
+  $("rows").innerHTML='<tr><td colspan="8" class="empty">Loading payments...</td></tr>';
+  try{
+    const url=API+"?action=adminList&status="+encodeURIComponent(status)+"&password="+encodeURIComponent(adminPassword);
+    const r=await fetch(url,{cache:"no-store"});
+    const d=await r.json();
+    if(!d.success) throw new Error(d.message||"Could not load payments.");
+    render(d.items||[]);
+  }catch(e){
+    $("rows").innerHTML='<tr><td colspan="8" class="empty">Unable to load: '+esc(e.message)+'</td></tr>';
+  }
+}
+
+function render(items){
+  if(!items.length){
+    $("rows").innerHTML='<tr><td colspan="8" class="empty">No '+esc($("statusFilter").value.toLowerCase())+' payments.</td></tr>';
+    return;
+  }
+  $("rows").innerHTML=items.map(x=>`
+    <tr>
+      <td><strong>${esc(x.reference)}</strong><div class="small">${esc(x.emailSent||"")}</div></td>
+      <td><strong>${esc(x.fullname)}</strong><div class="small">${esc(x.email)}</div><div class="small">@${esc(x.telegram)}</div></td>
+      <td>${esc(x.contact)}</td>
+      <td>₱${esc(x.payment)}</td>
+      <td><span class="status ${x.status.toLowerCase()}">${esc(x.status)}</span>${x.accessCode?'<div class="small" style="margin-top:6px">Code: <b>'+esc(x.accessCode)+'</b></div>':''}</td>
+      <td>${esc(x.date)}</td>
+      <td>${x.proof?'<a class="proof" href="'+esc(x.proof)+'" target="_blank" rel="noopener">View proof ↗</a>':'<span class="small">No proof</span>'}</td>
+      <td>
+        ${x.status==="PENDING"?`<div class="actions"><button class="primary" onclick="changeStatus('${esc(x.reference)}','approve')">✓ APPROVE</button><button class="danger" onclick="changeStatus('${esc(x.reference)}','reject')">REJECT</button></div>`:'<span class="small">No action</span>'}
+      </td>
+    </tr>
+  `).join("");
+}
+
+async function changeStatus(reference,action){
+  const label=action==="approve"?"approve":"reject";
+  if(!confirm("Are you sure you want to "+label+" "+reference+"?")) return;
+  try{
+    const r=await fetch(API,{method:"POST",body:JSON.stringify({action,password:adminPassword,reference})});
+    const d=await r.json();
+    if(!d.success) throw new Error(d.message||"Action failed.");
+    show($("message"),d.message||"Updated.","ok");
+    loadPayments();
+  }catch(e){show($("message"),e.message,"err")}
+}
+
+$("loginBtn").addEventListener("click",login);
+$("password").addEventListener("keydown",e=>{if(e.key==="Enter")login()});
+$("refreshBtn").addEventListener("click",loadPayments);
+$("statusFilter").addEventListener("change",loadPayments);
+$("logoutBtn").addEventListener("click",()=>{adminPassword="";location.reload()});
+</script>
+</body>
+</html>
