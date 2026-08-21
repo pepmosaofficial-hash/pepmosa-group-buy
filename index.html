@@ -212,9 +212,40 @@ footer{text-align:center;padding:30px;color:#806d7d}
       <div id="paymentMessage" class="access-message"></div>
     </div>
   </div>
-  <div id="codeStep" style="display:none">
+  <div id="codeStep" style="display:none;">
 
   <div class="summary">
+
+    <label
+      for="accessCodeInput"
+      style="display:block;font-weight:800;margin-bottom:7px;">
+      ACCESS CODE
+    </label>
+
+    <input
+      id="accessCodeInput"
+      type="text"
+      placeholder="Enter your access code"
+      autocomplete="off"
+      style="width:100%;box-sizing:border-box;padding:14px 16px;border:1px solid #e7c9df;border-radius:14px;font-size:16px;"
+    >
+
+    <button
+      id="verifyAccessButton"
+      class="primary"
+      type="button"
+      style="width:100%;margin-top:12px;">
+      VERIFY ACCESS CODE
+    </button>
+
+    <div
+      id="codeMessage"
+      class="access-message">
+    </div>
+
+  </div>
+
+</div>
 
     <label
       style="display:block;font-weight:800;margin-bottom:7px"
