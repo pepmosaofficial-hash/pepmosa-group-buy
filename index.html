@@ -1794,9 +1794,45 @@ h1 span{color:var(--pink)}
 
 <script>
 
-function openOrder(){
-  document.getElementById("orderModal").classList.add("show");
-  document.body.style.overflow="hidden";
+const ACCESS_API = "https://script.google.com/macros/s/AKfycbzbUO8zbvR-8fjsND6YuDkedCG2fqPwr7K7Bu31FduM_eJ8Z7DPXSeDC1OmQ_GS8Sap/exec";
+
+async function openOrder(){
+
+  const code = prompt("ENTER YOUR ACCESS CODE:");
+
+  if (!code) {
+    return;
+  }
+
+  try {
+
+    const response = await fetch(
+      ACCESS_API + "?code=" + encodeURIComponent(code.trim())
+    );
+
+    const result = await response.json();
+
+    if (result.approved === true) {
+
+      alert("ACCESS APPROVED! 💗");
+
+      document.getElementById("orderModal").classList.add("show");
+      document.body.style.overflow="hidden";
+
+    } else {
+
+      alert(result.message || "ACCESS NOT APPROVED.");
+
+    }
+
+  } catch (error) {
+
+    console.error(error);
+
+    alert("Unable to verify access code. Please try again.");
+
+  }
+}
 }
 
 function closeOrder(){
