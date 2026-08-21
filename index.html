@@ -1811,54 +1811,7 @@ h1 span{color:var(--pink)}
 </div>
 
 
-<script>
 
-<script>
-const ACCESS_API = "https://script.google.com/macros/s/AKfycbzbU08zbvR-8fjsND6YuDkedCG2fqPwr7K7Bu31FdumE_eJ87ZDPXSeDC10mQ_GS8Sap/exec";
-
-window.enterAccessCode = async function () {
-
-    const code = prompt("ENTER YOUR ACCESS CODE:");
-
-    if (!code) return;
-
-    try {
-
-        const response = await fetch(
-            ACCESS_API + "?code=" + encodeURIComponent(code.trim())
-        );
-
-        const result = await response.json();
-
-        if (result.approved === true) {
-
-            alert("ACCESS APPROVED! 💗");
-
-            sessionStorage.setItem("PEPMOSA_ACCESS", "approved");
-
-            document.getElementById("orderModal")?.classList.remove("show");
-
-            document.body.style.overflow = "";
-
-            document.getElementById("products")?.scrollIntoView({
-                behavior: "smooth"
-            });
-
-        } else {
-
-            alert(result.message || "ACCESS NOT APPROVED.");
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to verify access code. Please try again.");
-
-    }
-};
-</script>
 
 
 
