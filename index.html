@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPMOSA GROUP BUY</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:Arial,Helvetica,sans-serif;
+  color:#27152f;
+  background:
+    radial-gradient(circle at 15% 10%,rgba(255,176,218,.55),transparent 32%),
+    radial-gradient(circle at 90% 15%,rgba(190,155,255,.55),transparent 34%),
+    linear-gradient(135deg,#fff4fb 0%,#f9e7f5 48%,#eee5ff 100%);
+  min-height:100vh;
+}
+header{
+  position:sticky;top:0;z-index:20;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid #efd7ed;
+  padding:14px 5%;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.logo{
+  display:flex;align-items:center;gap:12px;
+  font-weight:900;letter-spacing:2px;font-size:25px;
+}
+.logoMark{
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(145deg,#171020,#7c3fa2);
+  color:white;display:grid;place-items:center;
+  font-family:Georgia,serif;font-size:20px;
+  box-shadow:0 8px 20px #b58ac855;
+}
+.logoText span{color:#df3b99}
+.cartBtn{
+  border:0;border-radius:16px;padding:14px 22px;
+  color:white;font-weight:800;font-size:15px;cursor:pointer;
+  background:linear-gradient(90deg,#e83e9d,#8e45d6);
+  box-shadow:0 8px 20px #b44ca744;
+}
+.hero{
+  max-width:1200px;margin:45px auto 35px;padding:55px;
+  border:1px solid #fff;background:rgba(255,255,255,.66);
+  border-radius:34px;box-shadow:0 25px 70px #a56aa522;
+  display:grid;grid-template-columns:1.35fr .65fr;gap:30px;
+}
+.badge{
+  display:inline-block;padding:9px 15px;border-radius:30px;
+  background:#ffd9ee;color:#a72570;font-weight:800;font-size:12px;
+  letter-spacing:1px;
+}
+h1{font-size:64px;line-height:.95;margin:20px 0 15px}
+.gradient{background:linear-gradient(90deg,#e63897,#8c45d6);color:transparent;background-clip:text}
+.hero p{font-size:18px;line-height:1.7;color:#705675;max-width:700px}
+.fee{
+  background:white;border:1px solid #efd8ec;border-radius:26px;padding:30px;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.fee small{color:#8a6286;font-weight:700}
+.fee strong{font-size:44px;color:#7b35a1;margin:10px 0}
+.primary{
+  border:0;padding:15px 20px;border-radius:15px;color:white;font-weight:800;
+  background:linear-gradient(90deg,#e83e9d,#9146d4);cursor:pointer;
+}
+main{max-width:1200px;margin:auto;padding:0 20px 80px}
+.sectionTitle{margin:40px 0 18px;font-size:34px}
+.sectionTitle span{color:#d93896}
+.toolbar{display:flex;gap:12px;margin-bottom:25px}
+input,select,textarea{
+  width:100%;padding:15px;border:1px solid #e7cde4;border-radius:14px;
+  background:#fff;color:#3b2342;font-size:15px;outline:none;
+}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{
+  background:rgba(255,255,255,.88);border:1px solid #ead7e8;
+  border-radius:24px;padding:22px;box-shadow:0 12px 35px #9f639b18;
+}
+.card h3{margin:0 0 7px;font-size:21px}
+.category{font-size:11px;color:#a15b91;font-weight:800;letter-spacing:1px}
+.card select{margin:18px 0 10px}
+.price{font-size:27px;font-weight:900;color:#b62f79;margin:10px 0 15px}
+.add{
+  width:100%;padding:13px;border:0;border-radius:13px;
+  background:#f4d8ee;color:#76255f;font-weight:800;cursor:pointer;
+}
+.locked{opacity:.65}
+.overlay{
+  position:fixed;inset:0;background:#24152dcc;z-index:100;
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal{
+  width:min(520px,100%);background:white;border-radius:28px;padding:30px;
+  box-shadow:0 30px 100px #0005;position:relative;
+}
+.modal h2{margin-top:0;font-size:30px}
+.close{position:absolute;right:18px;top:14px;border:0;background:none;font-size:25px;cursor:pointer}
+.modal label{display:block;font-weight:700;font-size:13px;margin:13px 0 6px}
+.notice{background:#fff0f8;border:1px solid #f2cde3;border-radius:14px;padding:13px;margin:14px 0;color:#753b66}
+.summary{background:#faf4fb;border-radius:16px;padding:16px;line-height:1.7}
+#products{scroll-margin-top:100px}
+.tracking{
+  margin-top:55px;background:rgba(255,255,255,.75);
+  border:1px solid #ead7e8;border-radius:26px;padding:28px;
+}
+.empty{text-align:center;color:#8c6c88;padding:25px}
+@media(max-width:800px){
+ .hero{grid-template-columns:1fr;padding:30px}
+ h1{font-size:44px}
+ .grid{grid-template-columns:1fr}
+ .toolbar{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logoMark">P</div>
+    <div class="logoText">PEPMOSA <span>GROUP BUY</span></div>
+  </div>
+  <button class="cartBtn" onclick="openCart()">🛒 CART <span id="cartCount">0</span></button>
+</header>
+
+<section class="hero">
+  <div>
+    <span class="badge">PRIVATE GROUP BUY PORTAL</span>
+    <h1>WELCOME TO<br><span class="gradient">PEPMOSA.</span></h1>
+    <p>Browse the available products and prices. Pay the group-buy access fee first to request ordering access. Once your payment is approved, your cart will be unlocked.</p>
+    <button class="primary" onclick="openAccess()">GET ACCESS / PAY ₱180</button>
+  </div>
+  <div class="fee">
+    <small>GROUP-BUY ACCESS FEE</small>
+    <strong>₱180</strong>
+    <p>Submit your Telegram name, details and payment proof. Ordering access is activated after manual approval.</p>
+    <button class="primary" onclick="openAccess()">REQUEST ACCESS</button>
+  </div>
+</section>
+
+<main id="products">
+  <h2 class="sectionTitle">PRODUCTS <span>& PRICES</span></h2>
+  <div class="toolbar">
+    <input id="search" placeholder="Search products..." oninput="renderProducts()">
+    <select id="category" onchange="renderProducts()">
+      <option value="ALL">ALL CATEGORIES</option>
+      <option value="FAT MELTERS">FAT MELTERS</option>
+      <option value="GLUTA">GLUTA</option>
+      <option value="PEPTIDE">PEPTIDE</option>
+    </select>
+  </div>
+  <div id="productGrid" class="grid"></div>
+
+  <section class="tracking">
+    <h2>ORDER TRACKING</h2>
+    <p>Enter your order number to check the saved status on this browser.</p>
+    <div class="toolbar">
+      <input id="trackNumber" placeholder="Example: PM-20260821-001">
+      <button class="primary" onclick="trackOrder()">TRACK ORDER</button>
+    </div>
+    <div id="trackResult" class="empty">No order searched yet.</div>
+  </section>
+</main>
+
+<div class="overlay" id="accessModal">
+ <div class="modal">
+  <button class="close" onclick="closeModal('accessModal')">×</button>
+  <h2>Get Ordering Access</h2>
+  <div class="notice"><b>Admin fee: ₱180</b><br>Ordering/cart access will only unlock after your payment has been manually approved.</div>
+  <label>Telegram Name</label>
+  <input id="telegram" placeholder="@yourtelegramname">
+  <label>Full Name</label>
+  <input id="fullName" placeholder="Your full name">
+  <label>Payment Reference</label>
+  <input id="paymentRef" placeholder="Reference number">
+  <label>Payment Proof</label>
+  <input id="proof" type="file" accept="image/*">
+  <p style="font-size:13px;color:#795e76">For this first version, the form records your request locally. Connect a database/payment workflow later for real admin approval.</p>
+  <button class="primary" style="width:100%" onclick="submitAccess()">SUBMIT ₱180 PAYMENT</button>
+ </div>
+</div>
+
+<div class="overlay" id="cartModal">
+ <div class="modal">
+  <button class="close" onclick="closeModal('cartModal')">×</button>
+  <h2>Your Cart</h2>
+  <div id="cartItems"></div>
+  <label>Full Name</label><input id="checkoutName" placeholder="Full name">
+  <label>Telegram Name</label><input id="checkoutTelegram" placeholder="@yourtelegramname">
+  <label>Complete Delivery Address</label><textarea id="address" rows="4" placeholder="House/Unit, Street, Barangay, City, Province, ZIP"></textarea>
+  <button class="primary" style="width:100%;margin-top:16px" onclick="checkout()">CHECK OUT</button>
+ </div>
+</div>
+
+<div class="overlay" id="successModal">
+ <div class="modal">
+  <h2>Order Received 💗</h2>
+  <div id="successSummary" class="summary"></div>
+  <button class="primary" style="width:100%;margin-top:18px" onclick="closeModal('successModal')">DONE</button>
+ </div>
+</div>
+
+<div class="overlay" id="welcomeModal">
+ <div class="modal">
+  <h2>Welcome to PEPMOSA 💗</h2>
+  <p>Welcome to the PEPMOSA Group Buy Portal.</p>
+  <p>You can browse products and prices freely. To place an order, you must first submit the ₱180 group-buy access fee and wait for approval.</p>
+  <button class="primary" style="width:100%" onclick="closeModal('welcomeModal')">ENTER PEPMOSA</button>
+ </div>
+</div>
+
+<script>
+const products=[
+ {name:"LIPOVELA",cat:"FAT MELTERS",variants:[["10ML",1200],["50ML",4500]]},
+ {name:"LEMON BOTTLE",cat:"FAT MELTERS",variants:[["10ML",1200],["50ML",4500]]},
+ {name:"KOREAN GLUTAONE",cat:"GLUTA",variants:[["50 UNITS",0],["100 UNITS",0]]},
+ {name:"GTT FUAN",cat:"GLUTA",variants:[["STANDARD",0]]},
+ {name:"TIRZEPATIDE",cat:"PEPTIDE",variants:[["15MG",0],["30MG",0]]},
+ {name:"TIRZEPATIDE — SALTFORM",cat:"PEPTIDE",variants:[["15MG",0],["30MG",0]]},
+ {name:"RETATRUTIDE",cat:"PEPTIDE",variants:[["10MG",0],["15MG",0]]},
+ {name:"GHK-CU",cat:"PEPTIDE",variants:[["50MG",0],["100MG",0]]},
+ {name:"5-AMINO-1MQ",cat:"PEPTIDE",variants:[["50MG",0]]},
+ {name:"AOD-9604",cat:"PEPTIDE",variants:[["5MG",0]]},
+ {name:"EPITALON",cat:"PEPTIDE",variants:[["10MG",0]]},
+ {name:"PE 22-28",cat:"PEPTIDE",variants:[["10MG",675]]},
+ {name:"KISSPEPTIN-10",cat:"PEPTIDE",variants:[["10MG",465]]}
+];
+
+let cart=[];
+let approved=localStorage.getItem("pepmosaApproved")==="true";
+
+function peso(n){return n?("₱"+Number(n).toLocaleString("en-PH",{minimumFractionDigits:2})): "PRICE TBA";}
+function renderProducts(){
+ const q=document.getElementById("search").value.toLowerCase();
+ const c=document.getElementById("category").value;
+ const list=products.filter(p=>(c==="ALL"||p.cat===c)&&p.name.toLowerCase().includes(q));
+ document.getElementById("productGrid").innerHTML=list.map((p,i)=>{
+   const idx=products.indexOf(p);
+   return `<article class="card ${approved?'':'locked'}">
+    <div class="category">${p.cat}</div><h3>${p.name}</h3>
+    <select id="v${idx}" onchange="updatePrice(${idx})">${p.variants.map((v,j)=>`<option value="${j}">${v[0]} — ${peso(v[1])}</option>`).join("")}</select>
+    <div class="price" id="price${idx}">${peso(p.variants[0][1])}</div>
+    <button class="add" onclick="addToCart(${idx})">🛒 ADD TO CART</button>
+   </article>`;
+ }).join("");
+}
+function updatePrice(i){
+ const j=+document.getElementById("v"+i).value;
+ document.getElementById("price"+i).textContent=peso(products[i].variants[j][1]);
+}
+function addToCart(i){
+ if(!approved){openAccess();return}
+ const j=+document.getElementById("v"+i).value,v=products[i].variants[j];
+ cart.push({name:products[i].name,variant:v[0],price:v[1]});
+ document.getElementById("cartCount").textContent=cart.length;
+ showToast("ADDED TO CART");
+}
+function showToast(text){
+ const old=document.getElementById("toast");if(old)old.remove();
+ const t=document.createElement("div");t.id="toast";t.textContent="✓ "+text;
+ Object.assign(t.style,{position:"fixed",left:"50%",top:"50%",transform:"translate(-50%,-50%)",zIndex:3000,background:"linear-gradient(90deg,#e83e9d,#9146d4)",color:"#fff",padding:"20px 34px",borderRadius:"18px",fontWeight:"900",fontSize:"18px",boxShadow:"0 20px 60px #0004"});
+ document.body.appendChild(t);setTimeout(()=>t.remove(),1500);
+}
+function openAccess(){document.getElementById("accessModal").style.display="flex"}
+function openCart(){
+ if(!approved){openAccess();return}
+ renderCart();document.getElementById("cartModal").style.display="flex";
+}
+function renderCart(){
+ const box=document.getElementById("cartItems");
+ if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.</div>';return}
+ box.innerHTML=cart.map((x,i)=>`<div style="padding:10px 0;border-bottom:1px solid #eee"><b>${x.name}</b><br>${x.variant} — ${peso(x.price)} <button onclick="cart.splice(${i},1);renderCart();document.getElementById('cartCount').textContent=cart.length" style="float:right;border:0;background:none;color:#c23;cursor:pointer">REMOVE</button></div>`).join("");
+}
+function checkout(){
+ if(!cart.length)return alert("Your cart is empty.");
+ const name=document.getElementById("checkoutName").value.trim(),tg=document.getElementById("checkoutTelegram").value.trim(),addr=document.getElementById("address").value.trim();
+ if(!name||!tg||!addr){showToast("PLEASE COMPLETE YOUR DETAILS");return}
+ const orderNo="PM-"+new Date().toISOString().slice(0,10).replaceAll("-","")+"-"+String(Date.now()).slice(-4);
+ const total=cart.reduce((a,b)=>a+b.price,0);
+ const summary=cart.map(x=>`${x.name} — ${x.variant} — ${peso(x.price)}`).join("<br>");
+ localStorage.setItem("order_"+orderNo,JSON.stringify({orderNo,name,tg,addr,items:cart,total,status:"RECEIVED"}));
+ document.getElementById("successSummary").innerHTML=`<b>ORDER NUMBER</b><br>${orderNo}<hr><b>ORDER SUMMARY</b><br>${summary}<hr><b>TOTAL:</b> ${peso(total)}<br><br>Status: <b>RECEIVED</b>`;
+ cart=[];document.getElementById("cartCount").textContent=0;closeModal("cartModal");document.getElementById("successModal").style.display="flex";
+}
+function submitAccess(){
+ const tg=document.getElementById("telegram").value.trim(),name=document.getElementById("fullName").value.trim(),ref=document.getElementById("paymentRef").value.trim();
+ if(!tg||!name||!ref){showToast("PLEASE COMPLETE YOUR PAYMENT DETAILS");return}
+ localStorage.setItem("pepmosaAccessRequest",JSON.stringify({tg,name,ref,status:"PENDING"}));
+ closeModal("accessModal");showToast("PAYMENT SUBMITTED — WAIT FOR APPROVAL");
+}
+function trackOrder(){
+ const n=document.getElementById("trackNumber").value.trim(),o=localStorage.getItem("order_"+n);
+ document.getElementById("trackResult").innerHTML=o?(()=>{const x=JSON.parse(o);return `<b>${x.orderNo}</b><br>Status: <b>${x.status}</b><br>${x.items.map(i=>i.name+" — "+i.variant).join("<br>")}`})():"Order not found on this browser.";
+}
+function closeModal(id){document.getElementById(id).style.display="none"}
+window.addEventListener("load",()=>{renderProducts();if(!sessionStorage.getItem("welcomeShown")){document.getElementById("welcomeModal").style.display="flex";sessionStorage.setItem("welcomeShown","1")}});
+</script>
+</body>
+</html>
