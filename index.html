@@ -90,18 +90,28 @@
         gap:20px;
     }
 
-    .hero-image{
-        display:flex;
-        justify-content:center;
-        align-items:center;
+    .hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.hero-image img {
+ width:360px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
     }
 
-    .hero-image img{
-        width:min(520px,90%);
-        max-height:540px;
-        object-fit:contain;
-        filter:drop-shadow(0 20px 30px rgba(133,50,104,.16));
-    }
+   .hero-image img {
+  width: min(520px, 90%);
+  max-height: 540px;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 30px rgba(133,104,104,.16));
+}
 
     .eyebrow{
         color:var(--pink);
