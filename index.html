@@ -745,6 +745,23 @@ h1 span{color:var(--pink)}
       <button class="pay-button" onclick="startOrdering()">
 🔒 PAY ₱180 TO START ORDERING →
 </button>
+      <button
+  type="button"
+  onclick="enterAccessCode()"
+  style="
+    width:100%;
+    margin-top:12px;
+    padding:14px 20px;
+    border:2px solid #ed2485;
+    border-radius:30px;
+    background:white;
+    color:#ed2485;
+    font-weight:900;
+    cursor:pointer;
+  "
+>
+  🔑 I ALREADY PAID — ENTER ACCESS CODE
+</button>
       
     </div>
 
@@ -1799,39 +1816,49 @@ h1 span{color:var(--pink)}
 <script>
 const ACCESS_API = "https://script.google.com/macros/s/AKfycbzbU08zbvR-8fjsND6YuDkedCG2fqPwr7K7Bu31FdumE_eJ87ZDPXSeDC10mQ_GS8Sap/exec";
 
-/* =========================
-   STEP 1 — PAY ADMIN FEE
-========================= */
-
-window.startOrdering = function () {
-
-    const modal = document.getElementById("orderModal");
-
-    if (modal) {
-        modal.classList.add("show");
-    }
-
-    document.body.style.overflow = "hidden";
-};
-
-
-/* =========================
-   STEP 2 — ENTER ACCESS CODE
-========================= */
-
 window.enterAccessCode = async function () {
 
     const code = prompt("ENTER YOUR ACCESS CODE:");
 
-    if (!code) {
-        return;
-    }
+    if (!code) return;
 
     try {
 
         const response = await fetch(
             ACCESS_API + "?code=" + encodeURIComponent(code.trim())
         );
+
+        const result = await response.json();
+
+        if (result.approved === true) {
+
+            alert("ACCESS APPROVED! 💗");
+
+            sessionStorage.setItem("PEPMOSA_ACCESS", "approved");
+
+            document.getElementById("orderModal")?.classList.remove("show");
+
+            document.body.style.overflow = "";
+
+            document.getElementById("products")?.scrollIntoView({
+                behavior: "smooth"
+            });
+
+        } else {
+
+            alert(result.message || "ACCESS NOT APPROVED.");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to verify access code. Please try again.");
+
+    }
+};
+</script>
 
         const result = await response.json();
 
