@@ -742,8 +742,9 @@ h1 span{color:var(--pink)}
 
       </div>
 
-      <button type="button" class="pay-button" onclick="startOrdering()">
-
+      <button class="pay-button" onclick="startOrdering()">
+🔒 PAY ₱180 TO START ORDERING →
+</button>
       
     </div>
 
@@ -1795,9 +1796,155 @@ h1 span{color:var(--pink)}
 
 <script>
 
-const ACCESS_API = "https://script.google.com/macros/s/AKfycbzbUO8zbvR-8fjsND6YuDkedCG2fqPwr7K7Bu31FduM_eJ8Z7DPXSeDC1OmQ_GS8Sap/exec";
+<script>
+const ACCESS_API = "https://script.google.com/macros/s/AKfycbzbU08zbvR-8fjsND6YuDkedCG2fqPwr7K7Bu31FdumE_eJ87ZDPXSeDC10mQ_GS8Sap/exec";
 
-window.startOrdering = async function () {
+/* =========================
+   STEP 1 — PAY ADMIN FEE
+========================= */
+
+window.startOrdering = function () {
+
+    const modal = document.getElementById("orderModal");
+
+    if (modal) {
+        modal.classList.add("show");
+    }
+
+    document.body.style.overflow = "hidden";
+};
+
+
+/* =========================
+   STEP 2 — ENTER ACCESS CODE
+========================= */
+
+window.enterAccessCode = async function () {
+
+    const code = prompt("ENTER YOUR ACCESS CODE:");
+
+    if (!code) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(
+            ACCESS_API + "?code=" + encodeURIComponent(code.trim())
+        );
+
+        const result = await response.json();
+
+        if (result.approved === true) {
+
+            alert("ACCESS APPROVED! 💗");
+
+            const modal = document.getElementById("orderModal");
+
+            if (modal) {
+                modal.classList.add("show");
+            }
+
+            document.body.style.overflow = "hidden";
+
+        } else {
+
+            alert(result.message || "ACCESS NOT APPROVED.");
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert("Unable to verify access code. Please try again.");
+
+    }
+};
+
+
+/* =========================
+   CLOSE ORDER MODAL
+========================= */
+
+function closeOrder() {
+
+    const modal = document.getElementById("orderModal");
+
+    if (modal) {
+        modal.classList.remove("show");
+    }
+
+    document.body.style.overflow = "";
+}
+
+
+/* =========================
+   SUBMIT ADMIN FEE PAYMENT
+========================= */
+
+function submitPayment() {
+
+    const telegram = document.getElementById("telegram").value.trim();
+    const fullname = document.getElementById("fullname").value.trim();
+    const contact = document.getElementById("contact").value.trim();
+    const receiptInput = document.getElementById("receipt");
+
+    const receipt =
+        receiptInput && receiptInput.files
+            ? receiptInput.files[0]
+            : null;
+
+    if (!telegram || !fullname || !contact || !receipt) {
+
+        alert(
+            "Please complete your Telegram username, full name, contact number, and upload your payment receipt."
+        );
+
+        return;
+    }
+
+    /*
+       PAYMENT SUBMISSION
+
+       The customer has now submitted their ₱180
+       admin-fee payment for manual approval.
+
+       AFTER YOU APPROVE THE PAYMENT:
+       Send the customer their ACCESS CODE.
+
+       The customer can then use the access-code
+       button to unlock ordering.
+    */
+
+    document.getElementById("orderForm").style.display = "none";
+    document.getElementById("success").style.display = "block";
+}
+
+
+/* =========================
+   ESC KEY
+========================= */
+
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+        closeOrder();
+    }
+
+});
+</script>
+window.startOrdering = function () {
+
+  const modal = document.getElementById("orderModal");
+
+  if (modal) {
+    modal.classList.add("show");
+  }
+
+  document.body.style.overflow = "hidden";
+
+};
 
   const code = prompt("ENTER YOUR ACCESS CODE:");
 
