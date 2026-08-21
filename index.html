@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PEPMOSA GROUP BUY</title>
+<style>
+  :root{
+    --pink:#e83f9d;
+    --pink2:#f7b7df;
+    --purple:#8d45d2;
+    --deep:#35183f;
+    --soft:#fff7fc;
+    --line:#efd7ea;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    color:var(--deep);
+    background:
+      radial-gradient(circle at 10% 15%, rgba(255,182,220,.55), transparent 32%),
+      radial-gradient(circle at 90% 20%, rgba(190,157,255,.42), transparent 35%),
+      linear-gradient(135deg,#fff7fb 0%,#ffe9f6 48%,#eee2ff 100%);
+    min-height:100vh;
+  }
+  header{
+    background:rgba(255,255,255,.82);
+    border-bottom:1px solid rgba(220,180,220,.45);
+    padding:18px 30px;
+    text-align:center;
+    position:sticky;top:0;z-index:10;
+    backdrop-filter:blur(12px);
+  }
+  header img{width:210px;max-width:65vw;height:auto;display:block;margin:auto}
+  .hero{
+    width:min(1120px,92%);
+    margin:45px auto 35px;
+    background:rgba(255,255,255,.72);
+    border:1px solid rgba(255,255,255,.9);
+    border-radius:34px;
+    padding:48px;
+    box-shadow:0 25px 70px rgba(113,55,125,.13);
+    text-align:center;
+  }
+  .hero-logo{
+    width:300px;
+    max-width:78%;
+    display:block;
+    margin:0 auto 24px;
+  }
+  .badge{
+    display:inline-block;
+    padding:9px 17px;
+    border-radius:999px;
+    background:#f9d8eb;
+    color:#9b2671;
+    font-weight:800;
+    font-size:12px;
+    letter-spacing:.8px;
+  }
+  h1{font-size:clamp(38px,6vw,72px);margin:20px 0 8px;line-height:.98}
+  h1 span{color:var(--pink)}
+  .hero p{max-width:720px;margin:18px auto;color:#765d7d;font-size:17px;line-height:1.7}
+  .buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+  button{
+    border:0;border-radius:14px;padding:15px 23px;font-weight:800;cursor:pointer;
+    font-size:14px;
+  }
+  .primary{color:white;background:linear-gradient(90deg,var(--pink),var(--purple));box-shadow:0 10px 25px rgba(181,55,155,.22)}
+  .secondary{background:white;color:#713a78;border:1px solid var(--line)}
+  .info{
+    width:min(1120px,92%);margin:0 auto 45px;
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+  }
+  .card{
+    background:rgba(255,255,255,.8);border:1px solid var(--line);
+    border-radius:22px;padding:25px;text-align:center;
+  }
+  .card strong{display:block;font-size:18px;margin-bottom:8px}
+  .card p{margin:0;color:#806a86;line-height:1.5;font-size:14px}
+  @media(max-width:700px){.hero{padding:32px 20px}.info{grid-template-columns:1fr}}
+  .overlay{
+    position:fixed;inset:0;background:rgba(47,22,55,.68);
+    display:none;align-items:center;justify-content:center;padding:20px;z-index:50;
+  }
+  .modal{
+    width:min(520px,100%);background:#fff;border-radius:28px;padding:30px;
+    box-shadow:0 30px 100px rgba(35,10,45,.35);position:relative;
+  }
+  .close{position:absolute;right:18px;top:15px;background:transparent;font-size:25px;padding:5px;color:#6c4b72}
+  .modal h2{margin:0 35px 8px 0;font-size:30px}
+  .modal .notice{
+    background:#fff0f8;border:1px solid #f1c6df;border-radius:17px;padding:17px;
+    color:#704c73;line-height:1.55;margin:18px 0;
+  }
+  .notice b{color:#9b2671}
+  label{display:block;font-weight:800;font-size:13px;margin:14px 0 7px}
+  input{
+    width:100%;padding:14px;border:1px solid #e7cde2;border-radius:13px;
+    font-size:15px;outline:none;
+  }
+  input:focus{border-color:var(--pink)}
+  .submit{width:100%;margin-top:20px}
+  .small{font-size:12px;color:#8c718f;line-height:1.5}
+  .success{text-align:center;padding:12px 5px 4px}
+  .success-icon{
+    width:70px;height:70px;border-radius:50%;margin:0 auto 18px;
+    display:grid;place-items:center;background:linear-gradient(135deg,#f05cab,#9345d4);
+    color:#fff;font-size:30px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="pepmosa-logo.png" alt="PEPMOSA Logo">
+</header>
+
+<section class="hero">
+  <img class="hero-logo" src="pepmosa-logo.png" alt="PEPMOSA">
+  <div class="badge">PEPMOSA GROUP BUY PORTAL</div>
+  <h1>WELCOME TO <span>PEPMOSA.</span></h1>
+  <p>
+    Your private group-buy portal for browsing available products and prices.
+    Browse first, then request ordering access when you're ready.
+  </p>
+  <div class="buttons">
+    <button class="primary" onclick="openAccess()">GET ORDERING ACCESS</button>
+    <button class="secondary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">VIEW PRODUCTS</button>
+  </div>
+</section>
+
+<section class="info" id="products">
+  <div class="card">
+    <strong>💗 BROWSE & CHECK PRICES</strong>
+    <p>View the available group-buy products and prices before deciding to order.</p>
+  </div>
+  <div class="card">
+    <strong>🎀 ₱180 ADMIN FEE</strong>
+    <p>Covers international shipping, labels, packing, and group-buy processing and handling.</p>
+  </div>
+  <div class="card">
+    <strong>🛒 ORDER AFTER APPROVAL</strong>
+    <p>Submit your payment proof first. Cart and ordering access will unlock after manual approval.</p>
+  </div>
+</section>
+
+<div class="overlay" id="accessModal">
+  <div class="modal">
+    <button class="close" onclick="closeAccess()">×</button>
+    <h2>Get Ordering Access 💗</h2>
+    <div class="notice">
+      <b>Admin fee: ₱180</b><br>
+      Your admin fee helps cover <b>international shipping, product labels,
+      packing, and group-buy processing/handling.</b><br><br>
+      Ordering/cart access will only unlock after your payment has been manually approved.
+    </div>
+
+    <label>Telegram Name</label>
+    <input id="telegram" placeholder="@yourtelegramname">
+
+    <label>Full Name</label>
+    <input id="fullname" placeholder="Your full name">
+
+    <label>Mobile Number</label>
+    <input id="mobile" type="tel" placeholder="09XXXXXXXXX">
+
+    <label>Payment Proof</label>
+    <input id="proof" type="file" accept="image/*,.pdf">
+
+    <p class="small">
+      Please make sure your payment proof is clear and readable.
+      No reference number is required.
+    </p>
+
+    <button class="primary submit" onclick="submitPayment()">SUBMIT ₱180 PAYMENT</button>
+  </div>
+</div>
+
+<div class="overlay" id="successModal">
+  <div class="modal">
+    <button class="close" onclick="closeSuccess()">×</button>
+    <div class="success">
+      <div class="success-icon">✓</div>
+      <h2>Payment Submitted!</h2>
+      <p id="thankYou" style="color:#765d7d;line-height:1.65"></p>
+      <div class="notice" style="text-align:left">
+        <b>STATUS: PENDING APPROVAL</b><br>
+        Your ₱180 admin fee payment has been submitted for manual review.
+        Once approved, your cart and ordering access will be unlocked.
+        <br><br>
+        <b>What happens next?</b><br>
+        1. 💳 Payment submitted<br>
+        2. 🔍 Admin reviews your payment<br>
+        3. ✅ Access approved<br>
+        4. 🛒 Start placing your order
+      </div>
+      <button class="primary" onclick="closeSuccess()">GOT IT 💗</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openAccess(){document.getElementById('accessModal').style.display='flex'}
+function closeAccess(){document.getElementById('accessModal').style.display='none'}
+function closeSuccess(){document.getElementById('successModal').style.display='none'}
+
+function submitPayment(){
+  const tg=document.getElementById('telegram').value.trim();
+  const name=document.getElementById('fullname').value.trim();
+  const mobile=document.getElementById('mobile').value.trim();
+  const proof=document.getElementById('proof').files[0];
+
+  if(!tg || !name || !mobile || !proof){
+    alert('Please complete your Telegram name, full name, mobile number, and payment proof.');
+    return;
+  }
+
+  localStorage.setItem('pepmosaAccessRequest', JSON.stringify({
+    telegram: tg,
+    fullname: name,
+    mobile: mobile,
+    status: 'PENDING'
+  }));
+
+  document.getElementById('thankYou').innerHTML =
+    'Thank you, <b>'+escapeHtml(tg)+'</b>! 🎀<br><br>' +
+    'Your ₱180 admin fee payment has been successfully submitted.';
+  closeAccess();
+  document.getElementById('successModal').style.display='flex';
+}
+
+function escapeHtml(text){
+  const d=document.createElement('div');
+  d.textContent=text;
+  return d.innerHTML;
+}
+</script>
+</body>
+</html>
