@@ -233,28 +233,9 @@ footer{text-align:center;padding:30px;color:#806d7d}
       <div class="tracker-node"><span>6</span><b>DELIVERED</b><small>Order completed</small></div>
     </div>
 
-    <button class="tracker-admin-toggle" type="button" onclick="toggleTrackerAdmin()">⚙ ADMIN — UPDATE TRACKER</button>
+  
 
-    <div id="trackerAdmin" class="tracker-admin" style="display:none">
-      <div class="tracker-admin-title">MANUAL ORDER STATUS UPDATE</div>
-      <p class="small">Use this panel to update an order manually on this browser.</p>
-
-      <div class="tracker-admin-grid">
-        <input id="adminOrderId" placeholder="Order ID e.g. PEP-001">
-        <select id="adminStatus">
-          <option value="ORDER CONFIRMED">ORDER CONFIRMED</option>
-          <option value="SHIPPED TO PH">SHIPPED TO PH</option>
-          <option value="PH WAREHOUSE">PH WAREHOUSE</option>
-          <option value="PACKING & LABELING">PACKING & LABELING</option>
-          <option value="FOR DELIVERY">FOR DELIVERY</option>
-          <option value="DELIVERED">DELIVERED</option>
-        </select>
-        <input id="adminNote" placeholder="Optional note">
-      </div>
-
-      <button class="primary" type="button" onclick="saveTrackerUpdate()">SAVE STATUS UPDATE</button>
-      <div id="adminTrackerMessage" class="access-message"></div>
-    </div>
+    
   </div>
 </section>
 
