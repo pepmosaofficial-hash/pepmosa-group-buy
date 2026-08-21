@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/PEPMOSA_ADMIN.html"
+    }
+  ]
+}
