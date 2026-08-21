@@ -1860,34 +1860,6 @@ window.enterAccessCode = async function () {
 };
 </script>
 
-        const result = await response.json();
-
-        if (result.approved === true) {
-
-            alert("ACCESS APPROVED! 💗");
-
-            const modal = document.getElementById("orderModal");
-
-            if (modal) {
-                modal.classList.add("show");
-            }
-
-            document.body.style.overflow = "hidden";
-
-        } else {
-
-            alert(result.message || "ACCESS NOT APPROVED.");
-
-        }
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to verify access code. Please try again.");
-
-    }
-};
 
 
 /* =========================
