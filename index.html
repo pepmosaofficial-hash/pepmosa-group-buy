@@ -57,6 +57,14 @@ main{max-width:1320px;margin:34px auto 80px;padding:0 24px}
   border:1px dashed #e4bfd7;display:flex;align-items:center;justify-content:center;
   margin-bottom:16px;overflow:hidden;position:relative;
 }
+  .product-image-slot img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  padding:12px;
+  box-sizing:border-box;
+}
 .product-image-slot .slot-inner{text-align:center;color:#c18baa;font-weight:800;font-size:12px;letter-spacing:1px}
 .product-image-slot .slot-inner .slot-icon{font-size:42px;display:block;margin-bottom:8px}
 .product-description{color:#6d5d70;font-size:13px;line-height:1.55;margin:9px 0 12px;min-height:40px}
@@ -337,11 +345,49 @@ function productDescription(p){
  if(n.includes("GHK")||n.includes("SNAP")||n.includes("AHK")) return "Beauty and skin-focused product listing with selectable strength.";
  if(n.includes("BPC")||n.includes("TB500")||n.includes("KPV")||n.includes("LL37")) return "Recovery and peptide product listing. Select your preferred variant.";
  return "Product photo space reserved here. Select a strength or variant to see the price.";
-}
+function productImage(name){
+  const n = name.toUpperCase();
+
+  const images = {
+    "5AMINO1MQ": "5amino1mq.png",
+    "ARA290": "ARA290.png",
+    "GLOW": "GLOW.png",
+    "KLOW": "KLOW.png",
+    "KPV": "KPV.png",
+    "AODPROMAX": "aodpromax.png",
+    "BPC157": "bpc157.png",
+    "CJC1295": "cjc1295withdac.png",
+    "CJC1295WITHDAC": "cjc1295withdac.png",
+    "HEXARELIN": "hexarelinacetate.png",
+    "HEXARELIN ACETATE": "hexarelinacetate.png",
+    "IGF1LR3": "igf1lr3.png",
+    "IPAMORELIN": "ipamorelin.png",
+    "LIPOCB12": "lipocb12.png",
+    "LIPO C B12": "lipocb12.png",
+    "LIPOC FAT BLASTER": "lipocfatblaster.png",
+    "LIPO-C (FAT BLASTER)": "lipocfatblaster.png",
+    "MOTSC": "motsc.png",
+    "SLUPP32": "slupp32.png",
+    "SS31": "ss31.png",
+    "TB500": "tb500.png",
+    "TB-500": "tb500.png",
+    "TESAMORELIN": "tesamorelin.png"
+  };
+
+  for(const key in images){
+    if(n.includes(key)){
+      return images[key];
+    }
+  }
+
+  return "pepmosa-no-name.png";
+}}
 function cardHTML(p){
  const pi=products.indexOf(p), id="v"+pi;
  return `<article class="card">
-   <div class="product-image-slot"><div class="slot-inner"><span class="slot-icon">🖼️</span>PRODUCT PHOTO<br><span style="font-weight:500;letter-spacing:0">IMAGE READY SLOT</span></div></div>
+   <div class="product-image-slot">
+  <img src="${productImage(p.name)}" alt="${p.name}">
+</div>
    <h3>${p.name.toUpperCase()}</h3><div class="sub">${groupFor(p)}</div>
    <div class="product-description">${productDescription(p)}</div>
    <label>SELECT MG / VARIANT</label>
