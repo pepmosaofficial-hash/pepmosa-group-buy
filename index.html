@@ -21,8 +21,16 @@ header{
   justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:20;
   border-bottom:1px solid #efdbea;backdrop-filter:blur(10px)
 }
-.logo{font-weight:900;letter-spacing:3px;font-size:25px;color:#35152f}
-.logo span{font-weight:400;letter-spacing:1px}
+.logo{
+  display:flex;
+  align-items:center;
+}
+
+.logo img{
+  height:70px;
+  width:auto;
+  display:block;
+}
 .cart-btn,.primary{
   border:0;border-radius:16px;padding:13px 20px;color:#fff;font-weight:900;
   background:linear-gradient(100deg,var(--pink),var(--purple));cursor:pointer
@@ -151,7 +159,9 @@ button.add-to-cart:disabled {
 
 
 <header>
-  <div class="logo">PEPMOSA <span>GROUP BUY</span></div>
+  <div class="logo">
+  <img src="pepmosa-no-name.png" alt="PEPMOSA">
+</div>
   <button class="cart-btn" onclick="openCart()">🛒 CART <span id="cartCount">0</span></button>
 </header>
 
