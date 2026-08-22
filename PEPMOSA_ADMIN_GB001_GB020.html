@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PEPMOSA Admin</title>
+<style>
+:root{--pink:#e83b9b;--purple:#9b45d0;--ink:#25152d;--muted:#75657a;--line:#ead5e5;--bg:#fff7fc;--green:#16844b;--red:#b3264d}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:linear-gradient(135deg,#fff8fc,#f7e9ff 55%,#efe3ff);min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}
+header{height:82px;background:#fffdfecf;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:20}
+.logo{font-weight:950;letter-spacing:1px;color:var(--pink);font-size:22px}.admin-pill{background:#24152d;color:#fff;padding:8px 13px;border-radius:99px;font-size:12px;font-weight:800}
+main{max-width:1400px;margin:28px auto 60px;padding:0 22px}
+h1{font-size:38px;margin:0}.muted{color:var(--muted)}.top{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-bottom:22px}
+.toolbar{background:#fff;border:1px solid var(--line);border-radius:20px;padding:16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:0 10px 30px #58234e12}
+select,input{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 13px;outline:none}.toolbar select{min-width:180px}
+.btn{border:0;border-radius:12px;padding:12px 16px;font-weight:900}.primary{background:linear-gradient(100deg,var(--pink),var(--purple));color:#fff}.light{background:#f8e8f3;color:#8d2364}.danger{background:#fff0f3;color:var(--red)}.green{background:#eaf8f0;color:var(--green)}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:18px 0}.stat{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px;box-shadow:0 8px 25px #58234e0d}.stat .n{font-size:30px;font-weight:950;margin-top:5px}.stat .l{font-size:12px;color:var(--muted);font-weight:800;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;margin-top:18px}.panel{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 10px 30px #58234e0d}.panel h2{font-size:21px;margin:0 0 15px}.panel-head{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:11px 8px;border-bottom:1px solid #f0e1ec;vertical-align:top}th{font-size:11px;text-transform:uppercase;color:var(--muted)}
+.badge{display:inline-block;padding:5px 9px;border-radius:99px;font-size:11px;font-weight:900}.pending{background:#fff4dc;color:#98630a}.approved{background:#eaf8f0;color:var(--green)}.rejected{background:#fff0f3;color:var(--red)}
+.actions{display:flex;gap:6px;flex-wrap:wrap}.actions .btn{padding:7px 9px;font-size:11px}
+.empty{padding:28px;text-align:center;color:var(--muted);border:1px dashed #ddc8d8;border-radius:14px;background:#fffafd}
+.kitrow{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #f0e1ec}.kitrow:last-child{border-bottom:0}.kitname{font-weight:900}.kitmeta{font-size:12px;color:var(--muted)}
+.coa{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end}.coa input[type=file]{width:100%}.coa-preview{margin-top:15px;padding:12px;background:#fffafd;border:1px solid var(--line);border-radius:14px}.coa-preview img{max-width:100%;max-height:260px;border-radius:10px;display:block}
+.login{position:fixed;inset:0;background:linear-gradient(135deg,#24122d,#6d1d58);display:flex;align-items:center;justify-content:center;padding:20px;z-index:100}.login.hide{display:none}.loginbox{width:min(430px,100%);background:#fff;border-radius:24px;padding:28px;box-shadow:0 30px 90px #0007}.loginbox h2{margin:0 0 6px}.loginbox p{color:var(--muted);line-height:1.5}.loginbox input{width:100%;margin:8px 0 12px}.msg{min-height:20px;font-size:13px;font-weight:800}.msg.err{color:var(--red)}.msg.ok{color:var(--green)}
+.toast{position:fixed;right:20px;bottom:20px;background:#25152d;color:#fff;border:1px solid #ef5db0;border-radius:13px;padding:13px 16px;display:none;z-index:200}.toast.show{display:block}
+@media(max-width:1000px){.cards{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}}
+@media(max-width:600px){header{padding:0 15px}.top{align-items:start;flex-direction:column}h1{font-size:30px}.cards{grid-template-columns:1fr 1fr}.panel{padding:14px}table{font-size:12px;display:block;overflow:auto;white-space:nowrap}}
+</style>
+</head>
+<body>
+
+<div class="login" id="login">
+  <div class="loginbox">
+    <h2>PEPMOSA ADMIN</h2>
+    <p>Enter the admin password to open the group-buy control center.</p>
+    <input id="adminPassword" type="password" placeholder="Admin password" autocomplete="current-password">
+    <button class="btn primary" style="width:100%" onclick="login()">ENTER ADMIN</button>
+    <div id="loginMsg" class="msg"></div>
+  </div>
+</div>
+
+<header>
+  <div class="logo">PEPMOSA <span style="font-weight:500;color:#75657a">GROUP BUY</span></div>
+  <div class="admin-pill">ADMIN CONTROL CENTER</div>
+</header>
+
+<main>
+  <div class="top">
+    <div><h1>Group Buy Admin</h1><div class="muted">Manage each GB separately — GB-001 through GB-020.</div></div>
+    <button class="btn danger" onclick="logout()">LOG OUT</button>
+  </div>
+
+  <div class="toolbar">
+    <strong>ACTIVE GB</strong>
+    <select id="gbSelect" onchange="render()"></select>
+    <button class="btn light" onclick="newGB()">CREATE / RESET GB RECORD</button>
+    <button class="btn primary" onclick="addDemoOrder()">ADD TEST ORDER</button>
+  </div>
+
+  <div class="cards">
+    <div class="stat"><div class="l">Admin fee requests</div><div class="n" id="feeCount">0</div></div>
+    <div class="stat"><div class="l">Approved customers</div><div class="n" id="customerCount">0</div></div>
+    <div class="stat"><div class="l">Total products</div><div class="n" id="productCount">0</div></div>
+    <div class="stat"><div class="l">Complete kits</div><div class="n" id="kitCount">0</div></div>
+  </div>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="panel-head"><h2>Admin Fee / Access Requests</h2><button class="btn light" onclick="clearPending()">CLEAR PENDING TEST DATA</button></div>
+      <div id="requests"></div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head"><h2>COA for <span id="coaGb"></span></h2></div>
+      <div class="coa">
+        <div><div class="muted" style="font-size:12px;margin-bottom:6px">Upload the COA for this GB.</div><input id="coaFile" type="file" accept="image/*,.pdf"></div>
+        <button class="btn primary" onclick="saveCOA()">SAVE COA</button>
+      </div>
+      <div id="coaPreview" class="coa-preview"></div>
+    </section>
+  </div>
+
+  <section class="panel" style="margin-top:18px">
+    <div class="panel-head"><h2>Customers & Consolidated Orders</h2><input id="search" placeholder="Search name, email, access code..." oninput="renderOrders()"></div>
+    <div id="orders"></div>
+  </section>
+
+  <section class="panel" style="margin-top:18px">
+    <div class="panel-head"><h2>Kit / Product Summary</h2><div class="muted">10 pcs = 1 kit</div></div>
+    <div id="kits"></div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/*
+  IMPORTANT:
+  This is the new ADMIN UI layer.
+  It keeps data separated by GB and consolidates products by customer/access code.
+  For live cross-device orders and real email sending, this UI must be connected to
+  the same backend/Google Apps Script that receives customer submissions.
+*/
+
+const ADMIN_PASSWORD = "CHANGE-ME-BEFORE-LIVE";
+const KEY = "PEPMOSA_ADMIN_V2";
+
+const PRODUCTS = [
+  "Tirzepatide 15mg","Tirzepatide 30mg","GTT FUAN","Korean Glutaone",
+  "GHK-CU 50mg","5AMINO1MQ 50mg","AOD 500mcg","Epitalon","Other"
+];
+
+function blank(){
+  const g={};
+  for(let i=1;i<=20;i++) g[String(i).padStart(3,"0")]={fees:[],orders:[],coa:null};
+  return g;
+}
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||blank()}catch(e){return blank()}}
+function save(){localStorage.setItem(KEY,JSON.stringify(DB))}
+let DB=load();
+
+function gb(){return document.getElementById("gbSelect").value}
+function showToast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2200)}
+function login(){
+  const v=document.getElementById("adminPassword").value;
+  if(v===ADMIN_PASSWORD){sessionStorage.setItem("PEPMOSA_ADMIN_LOGIN","1");document.getElementById("login").classList.add("hide");}
+  else {document.getElementById("loginMsg").textContent="Incorrect admin password.";document.getElementById("loginMsg").className="msg err";}
+}
+function logout(){sessionStorage.removeItem("PEPMOSA_ADMIN_LOGIN");location.reload()}
+
+function init(){
+  const s=document.getElementById("gbSelect");
+  for(let i=1;i<=20;i++){const id=String(i).padStart(3,"0");const o=document.createElement("option");o.value=id;o.textContent="GB-"+id;s.appendChild(o)}
+  s.value="001";
+  if(sessionStorage.getItem("PEPMOSA_ADMIN_LOGIN")==="1") document.getElementById("login").classList.add("hide");
+  render();
+}
+function newGB(){
+  const id=gb();
+  if(!confirm("Create/reset the empty record for GB-"+id+"? This removes only the local admin data for this GB."))return;
+  DB[id]={fees:[],orders:[],coa:null};save();render();showToast("GB-"+id+" is ready.");
+}
+function addDemoOrder(){
+  const id=gb(), g=DB[id];
+  const n="Test Customer "+(g.orders.length+1);
+  const access="GB"+id+"-"+Math.random().toString(36).slice(2,7).toUpperCase();
+  g.orders.push({id:"ORD-"+Date.now().toString().slice(-7),name:n,email:"test@example.com",telegram:"@test",accessCode:access,status:"Pending",items:[{product:"Tirzepatide 15mg",qty:3},{product:"Tirzepatide 30mg",qty:2}],created:new Date().toISOString()});
+  save();render();showToast("Test order added.");
+}
+function clearPending(){
+  const id=gb();DB[id].fees=DB[id].fees.filter(x=>x.status!=="Pending");save();render();
+}
+function approveFee(i){
+  const f=DB[gb()].fees[i]; if(!f)return;
+  f.status="Approved";
+  f.accessCode="GB"+gb()+"-"+Math.random().toString(36).slice(2,8).toUpperCase();
+  save();render();showToast("Approved. Access code generated.");
+}
+function rejectFee(i){DB[gb()].fees[i].status="Rejected";save();render()}
+function consolidateOrders(){
+  const map={};
+  DB[gb()].orders.forEach(o=>{
+    const key=(o.accessCode||o.email||o.name).toLowerCase();
+    if(!map[key]) map[key]={...o,items:[]};
+    (o.items||[]).forEach(it=>{
+      const p=map[key].items.find(x=>x.product===it.product);
+      if(p)p.qty+=Number(it.qty)||0; else map[key].items.push({product:it.product,qty:Number(it.qty)||0});
+    });
+  });
+  return Object.values(map);
+}
+function render(){
+  const id=gb(),g=DB[id];
+  document.getElementById("coaGb").textContent="GB-"+id;
+  document.getElementById("feeCount").textContent=g.fees.filter(x=>x.status==="Pending").length;
+  document.getElementById("customerCount").textContent=consolidateOrders().length;
+  document.getElementById("productCount").textContent=consolidateOrders().reduce((a,o)=>a+o.items.reduce((s,x)=>s+x.qty,0),0);
+  const sums={};consolidateOrders().forEach(o=>o.items.forEach(x=>sums[x.product]=(sums[x.product]||0)+x.qty));
+  document.getElementById("kitCount").textContent=Object.values(sums).reduce((a,q)=>a+Math.floor(q/10),0);
+  renderRequests();renderOrders();renderKits();renderCOA();
+}
+function renderRequests(){
+  const a=DB[gb()].fees,el=document.getElementById("requests");
+  if(!a.length){el.innerHTML='<div class="empty">No admin-fee requests for this GB.</div>';return}
+  el.innerHTML='<table><thead><tr><th>Customer</th><th>Contact</th><th>Status</th><th>Access code</th><th>Action</th></tr></thead><tbody>'+
+  a.map((x,i)=>`<tr><td><b>${esc(x.name)}</b><br><span class="muted">${esc(x.email||"")}</span></td><td>${esc(x.telegram||x.contact||"")}</td><td><span class="badge ${x.status.toLowerCase()}">${x.status}</span></td><td><b>${esc(x.accessCode||"—")}</b></td><td><div class="actions">${x.status==="Pending"?`<button class="btn green" onclick="approveFee(${i})">APPROVE</button><button class="btn danger" onclick="rejectFee(${i})">REJECT</button>`:""}</div></td></tr>`).join("")+
+  '</tbody></table>';
+}
+function renderOrders(){
+  const q=(document.getElementById("search").value||"").toLowerCase(),a=consolidateOrders().filter(o=>JSON.stringify(o).toLowerCase().includes(q)),el=document.getElementById("orders");
+  if(!a.length){el.innerHTML='<div class="empty">No orders for this GB yet.</div>';return}
+  el.innerHTML='<table><thead><tr><th>Customer</th><th>Access code</th><th>Products</th><th>Total pcs</th><th>Date</th></tr></thead><tbody>'+
+  a.map(o=>`<tr><td><b>${esc(o.name)}</b><br><span class="muted">${esc(o.email||"")}</span></td><td><b>${esc(o.accessCode||"—")}</b></td><td>${o.items.map(x=>esc(x.product)+" × "+x.qty).join("<br>")}</td><td><b>${o.items.reduce((s,x)=>s+x.qty,0)}</b></td><td>${new Date(o.created||Date.now()).toLocaleString()}</td></tr>`).join("")+
+  '</tbody></table>';
+}
+function renderKits(){
+  const sums={};consolidateOrders().forEach(o=>o.items.forEach(x=>sums[x.product]=(sums[x.product]||0)+x.qty));
+  const el=document.getElementById("kits"),keys=Object.keys(sums);
+  if(!keys.length){el.innerHTML='<div class="empty">No products ordered yet.</div>';return}
+  el.innerHTML=keys.map(p=>{const q=sums[p],kits=Math.floor(q/10),rem=q%10;return `<div class="kitrow"><div><div class="kitname">${esc(p)}</div><div class="kitmeta">${q} pcs total</div></div><div><b>${kits} kit${kits!==1?"s":""}</b> <span class="badge ${rem===0?"approved":"pending"}">${rem===0?"COMPLETE":"KULANG "+rem}</span></div></div>`}).join("");
+}
+function saveCOA(){
+  const f=document.getElementById("coaFile").files[0];if(!f){showToast("Choose a COA file first.");return}
+  const r=new FileReader();r.onload=()=>{DB[gb()].coa={name:f.name,type:f.type,data:r.result,savedAt:new Date().toISOString()};save();renderCOA();showToast("COA saved for GB-"+gb())};r.readAsDataURL(f);
+}
+function renderCOA(){
+  const c=DB[gb()].coa,el=document.getElementById("coaPreview");
+  if(!c){el.innerHTML='<div class="muted">No COA uploaded for this GB.</div>';return}
+  if(c.type.startsWith("image/"))el.innerHTML=`<b>${esc(c.name)}</b><img src="${c.data}" alt="COA">`;
+  else el.innerHTML=`<b>${esc(c.name)}</b><div class="muted">Saved for GB-${gb()}. PDF preview is not embedded in this demo admin UI.</div>`;
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+init();
+</script>
+</body>
+</html>
