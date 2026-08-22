@@ -125,8 +125,73 @@ function gb(){return document.getElementById("gbSelect").value}
 function fillGB(){["gbSelect","orderGB"].forEach(id=>{let s=document.getElementById(id);for(let i=1;i<=20;i++){let v=String(i).padStart(3,"0"),o=document.createElement("option");o.value=v;o.textContent="GB-"+v;s.appendChild(o)}})}
 function tab(id,b){document.querySelectorAll(".section").forEach(x=>x.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.remove("active"));b.classList.add("active");if(id==="payments")loadPayments();if(id==="orders")loadOrders();if(id==="products")loadProducts();if(id==="coa")loadCOAs()}
 function closeModal(id){document.getElementById(id).classList.remove("show")}
-async function apiPost(o){let r=await fetch(API,{method:"POST",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(o)});let d=await r.json();if(!d.success)throw new Error(d.message||"Request failed.");return d}
-async function apiGet(o){let r=await fetch(API+"?"+new URLSearchParams(o),{cache:"no-store"});let d=await r.json();if(!d.success)throw new Error(d.message||"Request failed.");return d}
+async function apiPost(o) {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify(o),
+      redirect: "follow"
+    });
+
+    const text = await response.text();
+
+    console.log("Apps Script response:", text);
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      throw new Error("Apps Script returned: " + text.substring(0, 200));
+    }
+
+    if (!data.success && data.ok !== true) {
+      throw new Error(data.message || "Apps Script request failed");
+    }
+
+    return data;
+
+  } catch (error) {
+    console.error("API ERROR:", error);
+    throw new Error(error.message || "Unable to connect to Apps Script");
+  }
+}
+async function apiGet(o) {
+  try {
+    const params = new URLSearchParams(o || {});
+    const url = API_URL + "?" + params.toString();
+
+    const response = await fetch(url, {
+      method: "GET",
+      redirect: "follow"
+    });
+
+    const text = await response.text();
+
+    console.log("Apps Script GET response:", text);
+
+    let data;
+
+    try {
+      data = JSON.parse(text);
+    } catch (e) {
+      throw new Error("Apps Script returned: " + text.substring(0, 200));
+    }
+
+    if (!data.success && data.ok !== true) {
+      throw new Error(data.message || "Apps Script request failed");
+    }
+
+    return data;
+
+  } catch (error) {
+    console.error("GET API ERROR:", error);
+    throw new Error(error.message || "Unable to connect to Apps Script");
+  }
+}
 async function login(){let p=document.getElementById("password").value.trim();try{await apiPost({action:"adminLogin",password:p});password=p;sessionStorage.setItem("PEPMOSA_ADMIN_PASSWORD",p);document.getElementById("login").style.display="none";refreshGB()}catch(e){document.getElementById("loginError").textContent=e.message}}
 function logout(){sessionStorage.removeItem("PEPMOSA_ADMIN_PASSWORD");location.reload()}
 async function refreshGB(){
