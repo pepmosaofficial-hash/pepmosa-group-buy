@@ -149,9 +149,9 @@ async function apiPost(o) {
       throw new Error("Apps Script returned: " + text.substring(0, 200));
     }
 
-    if (!data.success && data.ok !== true) {
-      throw new Error(data.message || "Apps Script request failed");
-    }
+if (data.ok !== true) {
+  throw new Error(data.error || data.message || "Apps Script request failed");
+}
 
     return data;
 
@@ -182,9 +182,9 @@ async function apiGet(o) {
       throw new Error("Apps Script returned: " + text.substring(0, 200));
     }
 
-    if (!data.success && data.ok !== true) {
-      throw new Error(data.message || "Apps Script request failed");
-    }
+    if (data.ok !== true) {
+  throw new Error(data.error || data.message || "Apps Script request failed");
+}
 
     return data;
 
