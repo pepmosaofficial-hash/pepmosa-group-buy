@@ -112,8 +112,43 @@ button.add-to-cart:disabled {
 }
 </style>
 
+
+<style id="pepmosa-logo-fix">
+.pepmosa-brand-logo{
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  letter-spacing:2.5px;
+  font-size:24px;
+  color:#d92f86;
+  text-decoration:none;
+}
+.pepmosa-brand-logo .pm-mark{
+  width:38px;height:38px;border-radius:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,#d92f86,#a63fd1);
+  color:#fff;font-size:18px;letter-spacing:0;
+  box-shadow:0 6px 18px rgba(217,47,134,.22);
+}
+.pepmosa-brand-logo .pm-name{
+  background:linear-gradient(90deg,#d92f86,#a63fd1);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+</style>
+
 </head>
 <body>
+
+<header class="pepmosa-brand-header" style="background:#fff;border-bottom:1px solid #eadfe7;padding:16px 28px;">
+  <a href="#" class="pepmosa-brand-logo" aria-label="PEPMOSA">
+    <span class="pm-mark">P</span>
+    <span class="pm-name">PEPMOSA</span>
+  </a>
+</header>
+
 
 <header>
   <div class="logo">PEPMOSA <span>GROUP BUY</span></div>
